@@ -1,7 +1,7 @@
 <template>
     <div class="home">
         <el-header class="header">
-
+            <el-button type="primary" @click="handlePreview">预览</el-button>
         </el-header>
 
         <el-container class="container">
@@ -28,14 +28,23 @@
             <el-aside class="area-config" width="250px">
                 sdfs
             </el-aside>
-
         </el-container>
+
+        <el-dialog title="预览" :visible.sync="dialogVisible">
+            <created-form :data="form"></created-form>
+            <!-- <GenerateForm v-if="dialogVisible" :data="form" :value="widgetModels" ref="generateForm"></GenerateForm> -->
+            <span slot="footer">
+                <el-button type="primary">获取数据</el-button>
+                <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
+            </span>
+        </el-dialog>
     </div>
 </template>
 
 <script>
 import draggable from 'vuedraggable'
 import Form from './Form'
+import CreatedForm from './CreatedForm'
 
 import { components } from '../config/components'
 
@@ -43,7 +52,8 @@ export default {
     name: 'home',
     components: {
         draggable,
-        Form
+        Form,
+        CreatedForm
     },
     data () {
         return {
@@ -58,7 +68,14 @@ export default {
                     labelPosition: 'right',
                     size: 'small'
                 }
-            }
+            },
+            dialogVisible: false
+        }
+    },
+    methods: {
+        handlePreview () {
+            console.log(11)
+            this.dialogVisible = true
         }
     }
 }
