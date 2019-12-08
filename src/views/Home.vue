@@ -25,9 +25,9 @@
                 <Form :data="form"></Form>
             </el-container>
 
-            <el-aside class="area-config" width="250px">
+            <!-- <el-aside class="area-config" width="250px">
                 sdfs
-            </el-aside>
+            </el-aside> -->
         </el-container>
 
         <el-dialog title="预览" :visible.sync="dialogVisible">
@@ -74,7 +74,7 @@ export default {
     },
     methods: {
         handlePreview () {
-            console.log(11)
+            // console.log(11)
             this.dialogVisible = true
         }
     }

@@ -14,7 +14,7 @@ export default {
         }
     },
     mounted () {
-        console.log(this.data)
+        // console.log(this.data)
         const { type } = this.data
         // console.log(this)
         this.registerComponent(type)

@@ -29,5 +29,24 @@ export const components = [
                 }
             }
         ]
+    },
+    {
+        title: '高级字段',
+        list: [
+            {
+                id: 3,
+                type: 'subform',
+                name: '子表单',
+                icon: 'el-icon-notebook-2',
+                list: [],
+                options: {
+                    width: '100%',
+                    defaultValue: '',
+                    required: false,
+                    disabled: false,
+                    placeholder: ''
+                }
+            }
+        ]
     }
 ]

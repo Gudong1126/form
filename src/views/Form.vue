@@ -17,7 +17,8 @@
                             :label="item.name"
                             v-if="item && item.key"
                             :key="item.key"
-                            @click.native.stop="handleClickFormItem(item)">
+                            @click="handleClickFormItem(item)">
+                            <!-- @click.native.stop="handleClickFormItem(item)"> -->
                             <form-item :data="item"></form-item>
 
                             <div class="form-item-handle" v-if="selectFormItem.key === item.key">
@@ -53,7 +54,7 @@ export default {
     },
     watch: {
         'data.list' (val) {
-            console.log(val)
+            // console.log(val)
         },
         selectFormItem: {
             handler (val) {
@@ -94,7 +95,7 @@ export default {
             this.data.list.splice(index, 1)
         },
         handleClickFormItem (item) {
-            console.log(item)
+            // console.log(item)
             this.selectFormItem = item
         }
     }
