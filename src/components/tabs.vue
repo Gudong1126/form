@@ -1,40 +1,47 @@
 <template>
-    <div class="i-form">
-        <div v-if="data.list.length == 0" class="empty">从左侧拖拽来添加字段</div>
-        <el-form label-width="80px">
-            <draggable class="form-area" v-model="data.list"
-                :options="{
-                    group: 'people',
-                    //handle: '.drag-widget',
-                    'ghost-class': 'ghost',
-                    animation: '200'
-                }"
-                @add="handleWidgetAdd">
-                <transition-group name="fade" tag="div" class="form-list">
-                    <template v-for="(item, index) in data.list">
-                        <!-- @click.native.stop="handleClickFormItem(item)"> -->
-                        <div :class="{ 'form-item': true, active: selectFormItem.key === item.key }"
-                            :label="item.name"
-                            v-if="item && item.key"
-                            :key="item.key"
-                            @click="handleClickFormItem(item)">
-                            <form-item :data="item"></form-item>
-                            <div class="form-item-handle" v-if="selectFormItem.key === item.key">
-                                <i class="el-icon-delete" @click.stop="handleDeleteFormItem(index)"></i>
-                            </div>
-                        </div>
-                    </template>
-                </transition-group>
-            </draggable>
-        </el-form>
+    <div>
+        <el-tabs v-model="activeName" type="card">
+            <el-tab-pane label="用户管理" name="first">
+                <el-form label-width="80px">
+                    <draggable class="form-area" v-model="data.list"
+                        :options="{
+                            group: 'people',
+                            //handle: '.drag-widget',
+                            'ghost-class': 'ghost',
+                            animation: '200'
+                        }"
+                        @add="handleWidgetAdd">
+                        <transition-group name="fade" tag="div" class="form-list">
+                            <template v-for="(item, index) in data.list">
+                                <!-- @click.native.stop="handleClickFormItem(item)"> -->
+                                <div :class="{ 'form-item': true, active: selectFormItem.key === item.key }"
+                                    :label="item.name"
+                                    v-if="item && item.key"
+                                    :key="item.key"
+                                    @click="handleClickFormItem(item)">
+                                    <form-item :data="item"></form-item>
+                                    <div class="form-item-handle" v-if="selectFormItem.key === item.key">
+                                        <i class="el-icon-delete" @click.stop="handleDeleteFormItem(index)"></i>
+                                    </div>
+                                </div>
+                            </template>
+                        </transition-group>
+                    </draggable>
+                </el-form>
+            </el-tab-pane>
+            <el-tab-pane label="配置管理" name="second">配置管理</el-tab-pane>
+            <el-tab-pane label="角色管理" name="third">角色管理</el-tab-pane>
+            <el-tab-pane label="定时任务补偿" name="fourth">定时任务补偿</el-tab-pane>
+        </el-tabs>
     </div>
 </template>
 
 <script>
 import draggable from 'vuedraggable'
-import FormItem from './FormItem'
+import FormItem from '../views/FormItem'
+
 export default {
-    name: 'WidgetForm',
+    name: 'iTabs',
     components: {
         draggable,
         FormItem
@@ -47,19 +54,12 @@ export default {
     },
     data () {
         return {
-            selectFormItem: {}
+            selectFormItem: {},
+            activeName: 'first'
         }
     },
-    watch: {
-        'data.list' (val) {
-            // console.log(val)
-        },
-        selectFormItem: {
-            handler (val) {
-                this.$emit('update:select', val)
-            },
-            deep: true
-        }
+    mounted () {
+        // console.log(this.data)
     },
     methods: {
         handleWidgetAdd (e) {
@@ -146,5 +146,4 @@ export default {
         cursor: pointer;
     }
 }
-
 </style>

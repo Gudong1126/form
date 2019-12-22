@@ -46,6 +46,20 @@ export const components = [
                     disabled: false,
                     placeholder: ''
                 }
+            },
+            {
+                id: 4,
+                type: 'tabs',
+                name: '标签',
+                icon: 'el-icon-notebook-2',
+                list: [],
+                options: {
+                    width: '100%',
+                    defaultValue: '',
+                    required: false,
+                    disabled: false,
+                    placeholder: ''
+                }
             }
         ]
     }

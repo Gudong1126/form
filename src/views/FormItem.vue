@@ -1,5 +1,11 @@
 <template>
-    <div class="form-item"></div>
+    <div class="container">
+        <el-form-item v-if="data.type !== 'tabs'"
+            :label="data.name">
+            <div class="form-item"></div>
+        </el-form-item>
+        <div class="layouts-item"></div>
+    </div>
 </template>
 
 <script>
@@ -14,7 +20,7 @@ export default {
         }
     },
     mounted () {
-        // console.log(this.data)
+        console.log(this.data)
         const { type } = this.data
         // console.log(this)
         this.registerComponent(type)
@@ -35,8 +41,13 @@ export default {
                 // })
 
                 // 挂载到 ID 为 plateContainer 的DOM元素
-                instance.$mount(this.$el)
-                // console.log(this)
+                if (templateName === 'tabs') {
+                    instance.$mount(this.$el.querySelector('.layouts-item'))
+                } else {
+                    instance.$mount(this.$el.querySelector('.form-item'))
+                }
+                // instance.$mount(this.$el)
+                console.log(this)
                 // console.log(templateName + " 加载成功");
             })
         }
