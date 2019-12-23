@@ -2,18 +2,18 @@
     <div class="form-item">
         <el-form label-width="80px">
             <template v-for="item in data.list">
-                <form-item :data="item" v-if="item && item.key" :key="item.key"></form-item>
+                <render-item :data="item" v-if="item && item.key" :key="item.key"></render-item>
             </template>
         </el-form>
     </div>
 </template>
 
 <script>
-import FormItem from './FormItem'
+import RenderItem from '../components/RenderItem'
 export default {
-    name: 'CreatedForm',
+    name: 'MadeForm',
     components: {
-        FormItem
+        RenderItem
     },
     props: {
         data: {

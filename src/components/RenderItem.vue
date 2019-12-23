@@ -12,7 +12,7 @@
 import Vue from 'vue'
 
 export default {
-    name: 'FormItem',
+    name: 'RenderItem',
     props: {
         data: {
             type: Object,

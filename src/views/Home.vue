@@ -22,7 +22,7 @@
             </el-aside>
 
             <el-container class="area-container">
-                <Form :data="form"></Form>
+                <make-form :data="form"></make-form>
             </el-container>
 
             <!-- <el-aside class="area-config" width="250px">
@@ -31,8 +31,7 @@
         </el-container>
 
         <el-dialog title="预览" :visible.sync="dialogVisible">
-            <created-form :data="form"></created-form>
-            <!-- <GenerateForm v-if="dialogVisible" :data="form" :value="widgetModels" ref="generateForm"></GenerateForm> -->
+            <made-form :data="form"></made-form>
             <span slot="footer">
                 <el-button type="primary">获取数据</el-button>
                 <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
@@ -43,8 +42,8 @@
 
 <script>
 import draggable from 'vuedraggable'
-import Form from './Form'
-import CreatedForm from './CreatedForm'
+import MakeForm from './MakeForm'
+import MadeForm from './MadeForm'
 
 import { components } from '../config/components'
 
@@ -52,8 +51,8 @@ export default {
     name: 'home',
     components: {
         draggable,
-        Form,
-        CreatedForm
+        MakeForm,
+        MadeForm
     },
     data () {
         return {

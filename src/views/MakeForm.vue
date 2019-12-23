@@ -18,7 +18,7 @@
                             v-if="item && item.key"
                             :key="item.key"
                             @click="handleClickFormItem(item)">
-                            <form-item :data="item"></form-item>
+                            <render-item :data="item"></render-item>
                             <div class="form-item-handle" v-if="selectFormItem.key === item.key">
                                 <i class="el-icon-delete" @click.stop="handleDeleteFormItem(index)"></i>
                             </div>
@@ -32,12 +32,12 @@
 
 <script>
 import draggable from 'vuedraggable'
-import FormItem from './FormItem'
+import RenderItem from '../components/RenderItem'
 export default {
-    name: 'WidgetForm',
+    name: 'MakeForm',
     components: {
         draggable,
-        FormItem
+        RenderItem
     },
     props: {
         data: {
@@ -102,6 +102,7 @@ export default {
 
 <style lang="less" scoped>
 .i-form {
+    box-sizing: border-box;
     padding: 5px;
     width: 100%;
     background-color: #fff;

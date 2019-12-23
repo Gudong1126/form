@@ -2,32 +2,7 @@
     <div>
         <el-tabs v-model="activeName" type="card">
             <el-tab-pane label="用户管理" name="first">
-                <el-form label-width="80px">
-                    <draggable class="form-area" v-model="data.list"
-                        :options="{
-                            group: 'people',
-                            //handle: '.drag-widget',
-                            'ghost-class': 'ghost',
-                            animation: '200'
-                        }"
-                        @add="handleWidgetAdd">
-                        <transition-group name="fade" tag="div" class="form-list">
-                            <template v-for="(item, index) in data.list">
-                                <!-- @click.native.stop="handleClickFormItem(item)"> -->
-                                <div :class="{ 'form-item': true, active: selectFormItem.key === item.key }"
-                                    :label="item.name"
-                                    v-if="item && item.key"
-                                    :key="item.key"
-                                    @click="handleClickFormItem(item)">
-                                    <form-item :data="item"></form-item>
-                                    <div class="form-item-handle" v-if="selectFormItem.key === item.key">
-                                        <i class="el-icon-delete" @click.stop="handleDeleteFormItem(index)"></i>
-                                    </div>
-                                </div>
-                            </template>
-                        </transition-group>
-                    </draggable>
-                </el-form>
+                <make-form :data="data"></make-form>
             </el-tab-pane>
             <el-tab-pane label="配置管理" name="second">配置管理</el-tab-pane>
             <el-tab-pane label="角色管理" name="third">角色管理</el-tab-pane>
@@ -37,14 +12,13 @@
 </template>
 
 <script>
-import draggable from 'vuedraggable'
-import FormItem from '../views/FormItem'
+
+import MakeForm from '../views/MakeForm'
 
 export default {
     name: 'iTabs',
     components: {
-        draggable,
-        FormItem
+        MakeForm
     },
     props: {
         data: {
@@ -62,40 +36,7 @@ export default {
         // console.log(this.data)
     },
     methods: {
-        handleWidgetAdd (e) {
-            // console.log(e)
-            // console.log(this.data)
-            const newIndex = e.newIndex
-            // console.log(newIndex)
-            // 为添加的元素生成唯一的key
-            const key = Date.parse(new Date()) + '_' + Math.ceil(Math.random() * 99999)
-            this.$set(this.data.list, newIndex, {
-                ...this.data.list[newIndex],
-                options: {
-                    ...this.data.list[newIndex].options,
-                    remoteFunc: 'func_' + key
-                },
-                key,
-                // 绑定键值
-                model: this.data.list[newIndex].type + '_' + key,
-                rules: []
-            })
 
-            this.selectFormItem = this.data.list[newIndex]
-            // console.log(this.selectFormItem)
-        },
-        handleDeleteFormItem (index) {
-            if (this.data.list[index + 1]) {
-                this.selectFormItem = this.data.list[index + 1]
-            } else {
-                this.selectFormItem = this.data.list[index - 1] || {}
-            }
-            this.data.list.splice(index, 1)
-        },
-        handleClickFormItem (item) {
-            // console.log(item)
-            this.selectFormItem = item
-        }
     }
 }
 </script>

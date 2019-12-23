@@ -25,7 +25,7 @@
                             v-if="item && item.key"
                             :key="item.key"
                             @click.native.stop="handleClickFormItem(item)">
-                            <form-item :data="item"></form-item>
+                            <render-item :data="item"></render-item>
                         </td>
                     </template>
                 </tr>
@@ -36,12 +36,12 @@
 
 <script>
 import draggable from 'vuedraggable'
-import FormItem from '../views/FormItem'
+import RenderItem from './RenderItem'
 export default {
     name: 'Subform',
     components: {
         draggable,
-        FormItem
+        RenderItem
     },
     props: {
         data: {
