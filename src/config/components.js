@@ -4,7 +4,7 @@ export const components = [
         list: [
             {
                 id: 1,
-                type: 'input',
+                type: 'Input',
                 name: '单行文本',
                 icon: 'el-icon-notebook-1',
                 options: {
@@ -17,7 +17,7 @@ export const components = [
             },
             {
                 id: 2,
-                type: 'textarea',
+                type: 'Textarea',
                 name: '多行文本',
                 icon: 'el-icon-notebook-2',
                 options: {
@@ -35,7 +35,7 @@ export const components = [
         list: [
             {
                 id: 3,
-                type: 'subform',
+                type: 'Subform',
                 name: '子表单',
                 icon: 'el-icon-notebook-2',
                 list: [],
@@ -49,7 +49,7 @@ export const components = [
             },
             {
                 id: 4,
-                type: 'tabs',
+                type: 'Tabs',
                 name: '标签',
                 icon: 'el-icon-notebook-2',
                 list: [],

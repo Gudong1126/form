@@ -2,7 +2,13 @@
     <div>
         <el-tabs v-model="activeName" type="card">
             <el-tab-pane label="用户管理" name="first">
-                <make-form :data="data"></make-form>
+                <!-- <template v-if="isMade">
+                    <template v-for="item in data.list">
+                        <render-item :data="item" v-if="item && item.key" :key="item.key"></render-item>
+                    </template>
+                </template> -->
+                <made-form v-if="isMade" :data="data"></made-form>
+                <make-form v-else :data="data"></make-form>
             </el-tab-pane>
             <el-tab-pane label="配置管理" name="second">配置管理</el-tab-pane>
             <el-tab-pane label="角色管理" name="third">角色管理</el-tab-pane>
@@ -12,18 +18,25 @@
 </template>
 
 <script>
-
 import MakeForm from '../views/MakeForm'
+// import RenderItem from './RenderItem'
+import MadeForm from '../views/MadeForm'
 
 export default {
     name: 'iTabs',
     components: {
-        MakeForm
+        MakeForm,
+        // RenderItem,
+        MadeForm
     },
     props: {
         data: {
             type: Object,
             default: null
+        },
+        isMade: {
+            type: Boolean,
+            default: false
         }
     },
     data () {
@@ -32,8 +45,11 @@ export default {
             activeName: 'first'
         }
     },
+    // created () {
+    //     console.log(this)
+    // },
     mounted () {
-        // console.log(this.data)
+
     },
     methods: {
 

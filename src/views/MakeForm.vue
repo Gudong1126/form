@@ -14,7 +14,6 @@
                     <template v-for="(item, index) in data.list">
                         <!-- @click.native.stop="handleClickFormItem(item)"> -->
                         <div :class="{ 'form-item': true, active: selectFormItem.key === item.key }"
-                            :label="item.name"
                             v-if="item && item.key"
                             :key="item.key"
                             @click="handleClickFormItem(item)">

@@ -1,6 +1,6 @@
 <template>
     <div>
-        <el-input placeholder="文本框"></el-input>
+        <el-input v-model="data.options.defaultValue" placeholder="文本框"></el-input>
     </div>
     <!-- <el-form-item label="单行文本"> -->
     <!-- </el-form-item> -->
