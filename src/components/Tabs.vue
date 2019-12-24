@@ -1,32 +1,31 @@
 <template>
     <div>
         <el-tabs v-model="activeName" type="card">
-            <el-tab-pane label="用户管理" name="first">
-                <!-- <template v-if="isMade">
-                    <template v-for="item in data.list">
-                        <render-item :data="item" v-if="item && item.key" :key="item.key"></render-item>
-                    </template>
-                </template> -->
-                <made-form v-if="isMade" :data="data"></made-form>
+            <template v-for="(item, index) in data.options.tabs">
+                <el-tab-pane :key="index" :label="item.title" :name="item.title">
+                    <made-form v-if="isMade" ref="form" :data="item"></made-form>
+                    <make-form v-else :data="item"></make-form>
+                </el-tab-pane>
+            </template>
+            <!-- <el-tab-pane label="用户管理" name="first">
+                <made-form v-if="isMade" ref="form" :data="data"></made-form>
                 <make-form v-else :data="data"></make-form>
             </el-tab-pane>
             <el-tab-pane label="配置管理" name="second">配置管理</el-tab-pane>
             <el-tab-pane label="角色管理" name="third">角色管理</el-tab-pane>
-            <el-tab-pane label="定时任务补偿" name="fourth">定时任务补偿</el-tab-pane>
+            <el-tab-pane label="定时任务补偿" name="fourth">定时任务补偿</el-tab-pane> -->
         </el-tabs>
     </div>
 </template>
 
 <script>
 import MakeForm from '../views/MakeForm'
-// import RenderItem from './RenderItem'
 import MadeForm from '../views/MadeForm'
 
 export default {
     name: 'iTabs',
     components: {
         MakeForm,
-        // RenderItem,
         MadeForm
     },
     props: {
@@ -42,17 +41,30 @@ export default {
     data () {
         return {
             selectFormItem: {},
-            activeName: 'first'
+            activeName: 'tabs1'
         }
     },
-    // created () {
-    //     console.log(this)
-    // },
     mounted () {
-
+        console.log(this.data)
     },
     methods: {
+        // onChange (key, val) {
+        //     console.log(key)
+        //     console.log(val)
+        //     this.$emit('change', key, val)
+        // }
+        async getData () {
+            console.log(this.$refs.form)
+            const formList = this.$refs.form
+            let data = {}
 
+            for (const item of formList) {
+                const itemData = await item.handelGetFormData()
+                data = { ...data, ...itemData }
+            }
+            return data
+            // return this.$refs.form.handelGetFormData()
+        }
     }
 }
 </script>

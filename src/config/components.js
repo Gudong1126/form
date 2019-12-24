@@ -52,13 +52,22 @@ export const components = [
                 type: 'Tabs',
                 name: '标签',
                 icon: 'el-icon-notebook-2',
-                list: [],
                 options: {
                     width: '100%',
                     defaultValue: '',
                     required: false,
                     disabled: false,
-                    placeholder: ''
+                    placeholder: '',
+                    tabs: [
+                        {
+                            title: 'tabs1',
+                            list: []
+                        },
+                        {
+                            title: 'tabs2',
+                            list: []
+                        }
+                    ]
                 }
             }
         ]

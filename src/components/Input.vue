@@ -1,9 +1,7 @@
 <template>
     <div>
-        <el-input v-model="data.options.defaultValue" placeholder="文本框"></el-input>
+        <el-input v-model="value" placeholder="文本框"></el-input>
     </div>
-    <!-- <el-form-item label="单行文本"> -->
-    <!-- </el-form-item> -->
 </template>
 
 <script>
@@ -15,8 +13,18 @@ export default {
             default: null
         }
     },
-    mounted () {
-        // console.log(this.data)
+    computed: {
+        value: {
+            get () {
+                return this.data.options.defaultValue
+            },
+            set (val) {
+                this.data.options.defaultValue = val
+                const { model } = this.data
+
+                this.$emit('change', model, val)
+            }
+        }
     }
 }
 </script>

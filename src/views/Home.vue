@@ -31,9 +31,9 @@
         </el-container>
 
         <el-dialog title="预览" :visible.sync="dialogVisible">
-            <made-form :data="form"></made-form>
+            <made-form v-if="dialogVisible" ref="form" :data="form"></made-form>
             <span slot="footer">
-                <el-button type="primary">获取数据</el-button>
+                <el-button type="primary" @click="getData">获取数据</el-button>
                 <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
             </span>
         </el-dialog>
@@ -61,7 +61,55 @@ export default {
                 padding: '8px 5px'
             },
             form: {
-                list: [],
+                list: [
+                    {
+                        id: 4,
+                        type: 'Tabs',
+                        name: '标签',
+                        key: '123',
+                        icon: 'el-icon-notebook-2',
+                        options: {
+                            width: '100%',
+                            defaultValue: '',
+                            required: false,
+                            disabled: false,
+                            placeholder: '',
+                            tabs: [
+                                {
+                                    title: 'tabs1',
+                                    list: [{
+                                        id: 5,
+                                        type: 'Tabs',
+                                        name: '标签',
+                                        key: '456',
+                                        icon: 'el-icon-notebook-2',
+                                        options: {
+                                            width: '100%',
+                                            defaultValue: '',
+                                            required: false,
+                                            disabled: false,
+                                            placeholder: '',
+                                            tabs: [
+                                                {
+                                                    title: 'tabs1',
+                                                    list: []
+                                                },
+                                                {
+                                                    title: 'tabs2',
+                                                    list: []
+                                                }
+                                            ]
+                                        }
+                                    }]
+                                },
+                                {
+                                    title: 'tabs2',
+                                    list: []
+                                }
+                            ]
+                        }
+                    }
+                ],
                 config: {
                     labelWidth: 100,
                     labelPosition: 'right',
@@ -75,6 +123,10 @@ export default {
         handlePreview () {
             // console.log(11)
             this.dialogVisible = true
+        },
+        async getData () {
+            const data = await this.$refs.form.handelGetFormData()
+            console.log(data)
         }
     }
 }

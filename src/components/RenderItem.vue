@@ -21,11 +21,12 @@ export default {
     },
     data () {
         return {
-            isMade: findComponentUpward(this, 'MadeForm')
+            isMade: findComponentUpward(this, 'MadeForm'),
+            instance: null
         }
     },
     mounted () {
-        // console.log(this.data)
+        console.log(this.data)
         const { type } = this.data
         // console.log(findComponentUpward(this, 'MadeForm'))
         this.registerComponent(type)
@@ -44,6 +45,7 @@ export default {
                 // //  params 为组件内部抛出的数据
 
                 // })
+                instance.$on('change', this.onChange)
 
                 // 挂载到 ID 为 plateContainer 的DOM元素
                 if (templateName === 'Tabs') {
@@ -52,10 +54,24 @@ export default {
                 } else {
                     instance.$mount(this.$el.querySelector('.form-item'))
                 }
+                this.instance = instance
                 // instance.$mount(this.$el)
                 // console.log(this)
-                // console.log(templateName + " 加载成功");
+                console.log(templateName + ' 加载成功')
             })
+        },
+        onChange (key, val) {
+            this.$emit('change', key, val)
+        },
+        async getData () {
+            const childrenFormData = this.instance.getData
+
+            if (typeof childrenFormData === 'function') {
+                const formData = await childrenFormData()
+                return formData
+            } else {
+                return false
+            }
         }
     }
 }

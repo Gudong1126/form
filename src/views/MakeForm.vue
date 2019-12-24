@@ -1,6 +1,6 @@
 <template>
     <div class="i-form">
-        <div v-if="data.list.length == 0" class="empty">从左侧拖拽来添加字段</div>
+        <div v-if="data.list.length === 0" class="empty">从左侧拖拽来添加字段</div>
         <el-form label-width="80px">
             <draggable class="form-area" v-model="data.list"
                 :options="{
@@ -50,15 +50,15 @@ export default {
         }
     },
     watch: {
-        'data.list' (val) {
-            // console.log(val)
-        },
         selectFormItem: {
             handler (val) {
                 this.$emit('update:select', val)
             },
             deep: true
         }
+    },
+    mounted () {
+        console.log(this.data)
     },
     methods: {
         handleWidgetAdd (e) {
