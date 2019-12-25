@@ -1,19 +1,12 @@
 <template>
     <div>
-        <el-tabs v-model="activeName" type="card">
-            <template v-for="(item, index) in data.options.tabs">
+        <el-tabs v-model="activeName">
+            <template v-for="(item, index) in list">
                 <el-tab-pane :key="index" :label="item.title" :name="item.title">
                     <made-form v-if="isMade" ref="form" :data="item"></made-form>
                     <make-form v-else :data="item"></make-form>
                 </el-tab-pane>
             </template>
-            <!-- <el-tab-pane label="用户管理" name="first">
-                <made-form v-if="isMade" ref="form" :data="data"></made-form>
-                <make-form v-else :data="data"></make-form>
-            </el-tab-pane>
-            <el-tab-pane label="配置管理" name="second">配置管理</el-tab-pane>
-            <el-tab-pane label="角色管理" name="third">角色管理</el-tab-pane>
-            <el-tab-pane label="定时任务补偿" name="fourth">定时任务补偿</el-tab-pane> -->
         </el-tabs>
     </div>
 </template>
@@ -21,6 +14,7 @@
 <script>
 import MakeForm from '../views/MakeForm'
 import MadeForm from '../views/MadeForm'
+import deepCopy from '../utils/deepCopy'
 
 export default {
     name: 'iTabs',
@@ -41,27 +35,45 @@ export default {
     data () {
         return {
             selectFormItem: {},
-            activeName: 'tabs1'
+            activeName: 'tabs1',
+            dataCopy: {},
+            list: []
+        }
+    },
+    watch: {
+        data: {
+            handler (val) {
+                this.dataCopy = deepCopy(this.data)
+                this.list = deepCopy(this.data.options.tabs)
+            },
+            deep: true
+        },
+        list: {
+            handler (val) {
+                this.dataCopy.options.tabs = val
+                this.$emit('configJsonData', this.dataCopy)
+            },
+            deep: true
         }
     },
     mounted () {
-        console.log(this.data)
+        // console.log(this.data)
+        // console.log('Tabs' + JSON.stringify(this.data, null, 4))
     },
     methods: {
-        // onChange (key, val) {
-        //     console.log(key)
-        //     console.log(val)
-        //     this.$emit('change', key, val)
-        // }
         async getData () {
-            console.log(this.$refs.form)
+            // console.log(this.$refs.form)
             const formList = this.$refs.form
+            // console.log(formList)
             let data = {}
 
             for (const item of formList) {
+                // console.log(item.handelGetFormData)
                 const itemData = await item.handelGetFormData()
+                // console.log(itemData)
                 data = { ...data, ...itemData }
             }
+            console.log(data)
             return data
             // return this.$refs.form.handelGetFormData()
         }

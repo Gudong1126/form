@@ -22,7 +22,7 @@
             </el-aside>
 
             <el-container class="area-container">
-                <make-form :data="form"></make-form>
+                <make-form ref="makeForm" :data="form"></make-form>
             </el-container>
 
             <!-- <el-aside class="area-config" width="250px">
@@ -31,8 +31,11 @@
         </el-container>
 
         <el-dialog title="预览" :visible.sync="dialogVisible">
-            <made-form v-if="dialogVisible" ref="form" :data="form"></made-form>
+            <div v-if="dialogVisible">
+                <made-form v-show="test" ref="form" :data="formConfig"></made-form>
+            </div>
             <span slot="footer">
+                <el-button @click="toggleIt">显示/隐藏</el-button>
                 <el-button type="primary" @click="getData">获取数据</el-button>
                 <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
             </span>
@@ -61,67 +64,24 @@ export default {
                 padding: '8px 5px'
             },
             form: {
-                list: [
-                    {
-                        id: 4,
-                        type: 'Tabs',
-                        name: '标签',
-                        key: '123',
-                        icon: 'el-icon-notebook-2',
-                        options: {
-                            width: '100%',
-                            defaultValue: '',
-                            required: false,
-                            disabled: false,
-                            placeholder: '',
-                            tabs: [
-                                {
-                                    title: 'tabs1',
-                                    list: [{
-                                        id: 5,
-                                        type: 'Tabs',
-                                        name: '标签',
-                                        key: '456',
-                                        icon: 'el-icon-notebook-2',
-                                        options: {
-                                            width: '100%',
-                                            defaultValue: '',
-                                            required: false,
-                                            disabled: false,
-                                            placeholder: '',
-                                            tabs: [
-                                                {
-                                                    title: 'tabs1',
-                                                    list: []
-                                                },
-                                                {
-                                                    title: 'tabs2',
-                                                    list: []
-                                                }
-                                            ]
-                                        }
-                                    }]
-                                },
-                                {
-                                    title: 'tabs2',
-                                    list: []
-                                }
-                            ]
-                        }
-                    }
-                ],
+                list: [],
                 config: {
                     labelWidth: 100,
                     labelPosition: 'right',
                     size: 'small'
                 }
             },
-            dialogVisible: false
+            dialogVisible: false,
+            formConfig: {},
+            test: true
         }
     },
     methods: {
+        toggleIt () {
+            this.test = !this.test
+        },
         handlePreview () {
-            // console.log(11)
+            this.formConfig = this.$refs.makeForm.dataCopy
             this.dialogVisible = true
         },
         async getData () {

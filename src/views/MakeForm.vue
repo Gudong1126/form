@@ -17,7 +17,7 @@
                             v-if="item && item.key"
                             :key="item.key"
                             @click="handleClickFormItem(item)">
-                            <render-item :data="item"></render-item>
+                            <render-item :data="item" @configJsonData="configJsonData"></render-item>
                             <div class="form-item-handle" v-if="selectFormItem.key === item.key">
                                 <i class="el-icon-delete" @click.stop="handleDeleteFormItem(index)"></i>
                             </div>
@@ -32,6 +32,8 @@
 <script>
 import draggable from 'vuedraggable'
 import RenderItem from '../components/RenderItem'
+// import deepCopy from '../utils/deepCopy'
+
 export default {
     name: 'MakeForm',
     components: {
@@ -46,21 +48,38 @@ export default {
     },
     data () {
         return {
-            selectFormItem: {}
+            selectFormItem: {},
+            dataCopy: this.data
         }
     },
     watch: {
-        selectFormItem: {
+        // selectFormItem: {
+        //     handler (val) {
+        //         this.$emit('update:select', val)
+        //     },
+        //     deep: true
+        // }
+        data: {
             handler (val) {
-                this.$emit('update:select', val)
+                // console.log('makeForm' + JSON.stringify(val, null, 4))
+                this.$emit('configJsonChange', val)
             },
             deep: true
         }
     },
     mounted () {
-        console.log(this.data)
+        // console.log(this.data)
+        // console.log('makeForm' + JSON.stringify(this.data, null, 4))
     },
     methods: {
+        configJsonData (val) {
+            const { key } = val
+            const { list } = this.data
+
+            this.dataCopy.list = list.map(item => {
+                return item.key === key ? val : item
+            })
+        },
         handleWidgetAdd (e) {
             // console.log(e)
             // console.log(this.data)

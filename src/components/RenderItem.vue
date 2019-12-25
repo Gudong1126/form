@@ -26,7 +26,8 @@ export default {
         }
     },
     mounted () {
-        console.log(this.data)
+        // console.log(this.data)
+        // console.log('renderItem' + JSON.stringify(this.data, null, 4))
         const { type } = this.data
         // console.log(findComponentUpward(this, 'MadeForm'))
         this.registerComponent(type)
@@ -46,6 +47,7 @@ export default {
 
                 // })
                 instance.$on('change', this.onChange)
+                instance.$on('configJsonData', this.configJsonData)
 
                 // 挂载到 ID 为 plateContainer 的DOM元素
                 if (templateName === 'Tabs') {
@@ -57,11 +59,14 @@ export default {
                 this.instance = instance
                 // instance.$mount(this.$el)
                 // console.log(this)
-                console.log(templateName + ' 加载成功')
+                // console.log(templateName + ' 加载成功')
             })
         },
         onChange (key, val) {
             this.$emit('change', key, val)
+        },
+        configJsonData (val) {
+            this.$emit('configJsonData', val)
         },
         async getData () {
             const childrenFormData = this.instance.getData

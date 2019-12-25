@@ -32,22 +32,19 @@ export default {
             formData: {}
         }
     },
-    mounted () {
-        console.log(this.data)
-    },
     created () {
         this.initFormData()
     },
     methods: {
         initFormData () {
-            // const { list } = this.data
-            // const layoutEl = ['Tabs']
-            // // console.log(list)
-            // for (let i = 0; i < list.length; i++) {
-            //     if (!layoutEl.includes(list[i].type)) {
-            //         this.formData[list[i].model] = list[i].options.defaultValue
-            //     }
-            // }
+            const { list } = this.data
+            const layoutEl = ['Tabs']
+            // console.log(list)
+            for (let i = 0; i < list.length; i++) {
+                if (!layoutEl.includes(list[i].type)) {
+                    this.formData[list[i].model] = list[i].options.defaultValue
+                }
+            }
             // console.log(this.formData)
         },
         handelGetFormData () {
