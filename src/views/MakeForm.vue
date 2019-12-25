@@ -49,7 +49,7 @@ export default {
     data () {
         return {
             selectFormItem: {},
-            dataCopy: this.data
+            dataCopy: this.data // 保存一份配置信息的副本，也是最后获取到的配置信息
         }
     },
     watch: {

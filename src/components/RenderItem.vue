@@ -1,6 +1,6 @@
 <template>
     <div class="container">
-        <el-form-item v-if="data.type !== 'Tabs'" :label="data.name">
+        <el-form-item v-if="!inSubform && data.type !== 'Tabs'" :label="data.name">
             <div class="form-item"></div>
         </el-form-item>
         <div v-else class="layouts-item"></div>
@@ -17,19 +17,24 @@ export default {
         data: {
             type: Object,
             default: null
+        },
+        inSubform: {
+            type: Boolean,
+            default: false
         }
     },
     data () {
         return {
             isMade: findComponentUpward(this, 'MadeForm'),
-            instance: null
+            instance: null,
+            isSubFormItem: false
+            // isSubform: findComponentUpward(this, 'Subform')
         }
     },
     mounted () {
-        // console.log(this.data)
+        console.log(this.data)
         // console.log('renderItem' + JSON.stringify(this.data, null, 4))
         const { type } = this.data
-        // console.log(findComponentUpward(this, 'MadeForm'))
         this.registerComponent(type)
     },
     methods: {
@@ -43,22 +48,22 @@ export default {
 
                 // 监听抛出的数据  this.$emit("emitStream", {  data: "data" });
                 // instance.$on("emitStream", params => {
-                // //  params 为组件内部抛出的数据
+                //    params 为组件内部抛出的数据
 
                 // })
                 instance.$on('change', this.onChange)
                 instance.$on('configJsonData', this.configJsonData)
 
                 // 挂载到 ID 为 plateContainer 的DOM元素
-                if (templateName === 'Tabs') {
+                if (this.inSubform || templateName === 'Tabs') {
                     instance.isMade = Boolean(this.isMade)
                     instance.$mount(this.$el.querySelector('.layouts-item'))
                 } else {
                     instance.$mount(this.$el.querySelector('.form-item'))
                 }
                 this.instance = instance
+
                 // instance.$mount(this.$el)
-                // console.log(this)
                 // console.log(templateName + ' 加载成功')
             })
         },

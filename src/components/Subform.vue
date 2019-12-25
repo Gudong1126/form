@@ -25,7 +25,7 @@
                             v-if="item && item.key"
                             :key="item.key"
                             @click.native.stop="handleClickFormItem(item)">
-                            <render-item :data="item"></render-item>
+                            <render-item :data="item" :inSubform="true"></render-item>
                         </td>
                     </template>
                 </tr>
@@ -56,8 +56,8 @@ export default {
     },
     methods: {
         handleWidgetAdd (e) {
-            console.log(e)
-            console.log(this.data)
+            // console.log(e)
+            // console.log(this.data)
             const newIndex = e.newIndex
             // console.log(newIndex)
             // 为添加的元素生成唯一的key

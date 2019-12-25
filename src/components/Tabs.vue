@@ -45,6 +45,7 @@ export default {
     watch: {
         data: {
             handler (val) {
+                // 将list复制，否则可能会出现循环引用
                 this.dataCopy = deepCopy(this.data)
                 this.list = deepCopy(this.data.options.tabs)
             },
@@ -52,32 +53,23 @@ export default {
         },
         list: {
             handler (val) {
+                // 监听list的变化，并将 data 的副本向上传播
                 this.dataCopy.options.tabs = val
                 this.$emit('configJsonData', this.dataCopy)
             },
             deep: true
         }
     },
-    mounted () {
-        // console.log(this.data)
-        // console.log('Tabs' + JSON.stringify(this.data, null, 4))
-    },
     methods: {
-        async getData () {
-            // console.log(this.$refs.form)
+        async getData () { // 获取 tabs 中所有 form 表单中的数据
             const formList = this.$refs.form
-            // console.log(formList)
             let data = {}
 
             for (const item of formList) {
-                // console.log(item.handelGetFormData)
                 const itemData = await item.handelGetFormData()
-                // console.log(itemData)
                 data = { ...data, ...itemData }
             }
-            console.log(data)
             return data
-            // return this.$refs.form.handelGetFormData()
         }
     }
 }
