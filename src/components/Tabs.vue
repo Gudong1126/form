@@ -3,7 +3,9 @@
         <el-tabs v-model="activeName">
             <template v-for="(item, index) in list">
                 <el-tab-pane :key="index" :label="item.title" :name="item.title">
-                    <made-form v-if="isMade" ref="form" :data="item"></made-form>
+                    <template v-if="isMade">
+                        <made-form v-if="item.list.length > 0" ref="form" :data="item"></made-form>
+                    </template>
                     <make-form v-else :data="item"></make-form>
                 </el-tab-pane>
             </template>
