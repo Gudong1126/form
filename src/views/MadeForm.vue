@@ -29,23 +29,57 @@ export default {
     },
     data () {
         return {
-            formData: {}
+            formData: {},
+            rules: {},
+            value: {
+                Input_1577331391000_64647: '1',
+                Input_1577331400000_86522: '2',
+                Input_1577331402000_21851: '3'
+            }
         }
     },
     created () {
-        this.initFormData()
+        // this.initFormData()
+        this.mergeDefaultValue()
     },
     methods: {
+        mergeDefaultValue () {
+            const { value } = this
+            let { list } = this.data
+
+            for (const key in value) {
+                if (value.hasOwnProperty(key)) {
+                    const element = value[key]
+                    let index = -1
+                    let findFormItem = list.find((item, i) => {
+                        if (item.model === key) {
+                            index = i
+                            return true
+                        } else {
+                            return false
+                        }
+                    })
+
+                    if (findFormItem) {
+                        findFormItem.options.defaultValue = element
+                        list.splice(index, 1, findFormItem)
+                        this.data.list = list
+                    }
+                }
+            }
+            this.initFormData()
+        },
         initFormData () {
             const { list } = this.data
             const layoutEl = ['Tabs']
-            // console.log(list)
+
             for (let i = 0; i < list.length; i++) {
                 if (!layoutEl.includes(list[i].type)) {
                     this.formData[list[i].model] = list[i].options.defaultValue
                 }
             }
             // console.log(this.formData)
+            // console.log(JSON.stringify(this.data, null, 4))
         },
         handelGetFormData () {
             return new Promise((resolve, reject) => {

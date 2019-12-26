@@ -81,7 +81,122 @@ export default {
             this.test = !this.test
         },
         handlePreview () {
-            this.formConfig = this.$refs.makeForm.dataCopy
+            // this.formConfig = this.$refs.makeForm.dataCopy
+            // this.formConfig = {
+            //     'list': [
+            //         {
+            //             'id': 1,
+            //             'type': 'Input',
+            //             'name': '单行文本',
+            //             'icon': 'el-icon-notebook-1',
+            //             'options': {
+            //                 'width': '100%',
+            //                 'defaultValue': '',
+            //                 'required': false,
+            //                 'placeholder': '',
+            //                 'disabled': false,
+            //                 'remoteFunc': 'func_1577329405000_66917'
+            //             },
+            //             'key': '1577329405000_66917',
+            //             'model': 'Input_1577329405000_66917',
+            //             'rules': []
+            //         }
+            //     ],
+            //     'config': {
+            //         'labelWidth': 100,
+            //         'labelPosition': 'right',
+            //         'size': 'small'
+            //     }
+            // }
+            this.formConfig = {
+                'list': [
+                    {
+                        'id': 1,
+                        'type': 'Input',
+                        'name': '单行文本',
+                        'icon': 'el-icon-notebook-1',
+                        'options': {
+                            'width': '100%',
+                            'defaultValue': '',
+                            'required': false,
+                            'placeholder': '',
+                            'disabled': false,
+                            'remoteFunc': 'func_1577331391000_64647'
+                        },
+                        'key': '1577331391000_64647',
+                        'model': 'Input_1577331391000_64647',
+                        'rules': []
+                    },
+                    {
+                        'id': 4,
+                        'type': 'Tabs',
+                        'name': '标签',
+                        'icon': 'el-icon-notebook-2',
+                        'options': {
+                            'width': '100%',
+                            'defaultValue': '',
+                            'required': false,
+                            'disabled': false,
+                            'placeholder': '',
+                            'tabs': [
+                                {
+                                    'title': 'tabs1',
+                                    'list': [
+                                        {
+                                            'id': 1,
+                                            'type': 'Input',
+                                            'name': '单行文本',
+                                            'icon': 'el-icon-notebook-1',
+                                            'options': {
+                                                'width': '100%',
+                                                'defaultValue': '',
+                                                'required': false,
+                                                'placeholder': '',
+                                                'disabled': false,
+                                                'remoteFunc': 'func_1577331400000_86522'
+                                            },
+                                            'key': '1577331400000_86522',
+                                            'model': 'Input_1577331400000_86522',
+                                            'rules': []
+                                        }
+                                    ]
+                                },
+                                {
+                                    'title': 'tabs2',
+                                    'list': [
+                                        {
+                                            'id': 1,
+                                            'type': 'Input',
+                                            'name': '单行文本',
+                                            'icon': 'el-icon-notebook-1',
+                                            'options': {
+                                                'width': '100%',
+                                                'defaultValue': '',
+                                                'required': false,
+                                                'placeholder': '',
+                                                'disabled': false,
+                                                'remoteFunc': 'func_1577331402000_21851'
+                                            },
+                                            'key': '1577331402000_21851',
+                                            'model': 'Input_1577331402000_21851',
+                                            'rules': []
+                                        }
+                                    ]
+                                }
+                            ],
+                            'remoteFunc': 'func_1577331399000_58360'
+                        },
+                        'key': '1577331399000_58360',
+                        'model': 'Tabs_1577331399000_58360',
+                        'rules': []
+                    }
+                ],
+                'config': {
+                    'labelWidth': 100,
+                    'labelPosition': 'right',
+                    'size': 'small'
+                }
+            }
             this.dialogVisible = true
         },
         async getData () {
