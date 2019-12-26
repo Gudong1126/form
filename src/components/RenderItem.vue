@@ -32,7 +32,7 @@ export default {
         }
     },
     mounted () {
-        console.log(this.data)
+        // console.log(this.data)
         // console.log('renderItem' + JSON.stringify(this.data, null, 4))
         const { type } = this.data
         this.registerComponent(type)
@@ -46,6 +46,8 @@ export default {
                 // 传入数据 dataObj 为 props
                 instance.data = this.data
 
+                instance.isMade = Boolean(this.isMade) // 是否在 生成 中
+
                 // 监听抛出的数据  this.$emit("emitStream", {  data: "data" });
                 // instance.$on("emitStream", params => {
                 //    params 为组件内部抛出的数据
@@ -56,7 +58,6 @@ export default {
 
                 // 挂载到 ID 为 plateContainer 的DOM元素
                 if (this.inSubform || templateName === 'Tabs') {
-                    instance.isMade = Boolean(this.isMade)
                     instance.$mount(this.$el.querySelector('.layouts-item'))
                 } else {
                     instance.$mount(this.$el.querySelector('.form-item'))

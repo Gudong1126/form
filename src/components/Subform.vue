@@ -11,7 +11,7 @@
                     }"
                     tag='tr'
                     @add="handleWidgetAdd">
-                    <template v-for="(header) in data.list">
+                    <template v-for="header in data.list">
                         <th v-if="header && header.key" :key="header.key" scope="col">
                             {{ header.name }}
                         </th>
@@ -19,24 +19,26 @@
                 </draggable>
             </thead>
             <tbody>
-                <tr>
+                <tr v-for="(col, index) in value" :key="index">
                     <template v-for="(item) in data.list">
                         <td :class="{ 'form-item': true, active: selectFormItem.key === item.key }"
                             v-if="item && item.key"
-                            :key="item.key"
+                            :key="item.key + '' + index"
                             @click.native.stop="handleClickFormItem(item)">
-                            <render-item :data="item" :inSubform="true"></render-item>
+                            <render-item :data="item" :inSubform="true" @change="onChange(...arguments, col)"></render-item>
                         </td>
                     </template>
                 </tr>
             </tbody>
         </table>
+        <!-- <button @click="add">添加</button> -->
     </div>
 </template>
 
 <script>
 import draggable from 'vuedraggable'
 import RenderItem from './RenderItem'
+import { deepCopy } from '../utils/assist'
 export default {
     name: 'Subform',
     components: {
@@ -47,21 +49,51 @@ export default {
         data: {
             type: Object,
             default: null
+        },
+        isMade: {
+            type: Boolean,
+            default: false
         }
     },
     data () {
         return {
-            selectFormItem: {}
+            selectFormItem: {},
+            value: [],
+            obj: {}
         }
     },
+    mounted () {
+        const { list } = this.data
+
+        for (const item of list) {
+            this.obj[item.model] = item.options.defaultValue
+        }
+
+        const objTest = deepCopy(this.obj)
+        console.log(objTest)
+        this.value.push(objTest)
+    },
     methods: {
-        handleWidgetAdd (e) {
-            // console.log(e)
+        add () {
+            const objTest = deepCopy(this.obj)
+            console.log(objTest)
+            this.value.push(objTest)
+            console.log(this.value)
+            console.log(this.data)
+        },
+        onChange (key, val, row) {
             // console.log(this.data)
+            // console.log(this.obj)
+            // console.log(key)
+            // console.log(val)
+            // console.log(row)
+            row[key] = val
+            this.$emit('change', this.data.model, this.value)
+        },
+        handleWidgetAdd (e) {
             const newIndex = e.newIndex
-            // console.log(newIndex)
-            // 为添加的元素生成唯一的key
             const key = Date.parse(new Date()) + '_' + Math.ceil(Math.random() * 99999)
+
             this.$set(this.data.list, newIndex, {
                 ...this.data.list[newIndex],
                 options: {
@@ -69,13 +101,11 @@ export default {
                     remoteFunc: 'func_' + key
                 },
                 key,
-                // 绑定键值
                 model: this.data.list[newIndex].type + '_' + key,
                 rules: []
             })
 
             this.selectFormItem = this.data.list[newIndex]
-            // console.log(this.selectFormItem)
         },
         handleDeleteFormItem (index) {
             if (this.data.list[index + 1]) {
@@ -86,7 +116,6 @@ export default {
             this.data.list.splice(index, 1)
         },
         handleClickFormItem (item) {
-            // console.log(item)
             this.selectFormItem = item
         }
     }

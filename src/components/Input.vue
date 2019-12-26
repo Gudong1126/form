@@ -13,13 +13,21 @@ export default {
             default: null
         }
     },
+    data () {
+        return {
+            defaultValue: ''
+        }
+    },
+    mounted () {
+        this.defaultValue = this.data.options.defaultValue
+    },
     computed: {
         value: {
             get () {
-                return this.data.options.defaultValue
+                return this.defaultValue
             },
             set (val) {
-                this.data.options.defaultValue = val
+                this.defaultValue = val
                 const { model } = this.data
 
                 this.$emit('change', model, val)
