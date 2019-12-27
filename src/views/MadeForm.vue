@@ -32,9 +32,12 @@ export default {
             formData: {},
             rules: {},
             value: {
-                Input_1577331391000_64647: '1',
-                Input_1577331400000_86522: '2',
-                Input_1577331402000_21851: '3'
+                Input_1577409706000_98143: '1',
+                Subform_1577409700000_33712: [
+                    { Input_1577409701000_75448: '2' },
+                    { Input_1577409701000_75448: '3' },
+                    { Input_1577409701000_75448: '4' }
+                ]
             }
         }
     },
@@ -79,7 +82,7 @@ export default {
                 }
             }
             // console.log(this.formData)
-            // console.log(JSON.stringify(this.data, null, 4))
+            console.log(JSON.stringify(this.data, null, 4))
         },
         handelGetFormData () {
             return new Promise((resolve, reject) => {

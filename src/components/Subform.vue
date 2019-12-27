@@ -25,7 +25,7 @@
                             v-if="item && item.key"
                             :key="item.key + '' + index"
                             @click.native.stop="handleClickFormItem(item)">
-                            <render-item :data="item" :inSubform="true" @change="onChange(...arguments, col)"></render-item>
+                            <render-item :data="mergeDefaultValue(item, col)" :inSubform="true" @change="onChange(...arguments, col)"></render-item>
                         </td>
                     </template>
                 </tr>
@@ -63,17 +63,40 @@ export default {
         }
     },
     mounted () {
-        const { list } = this.data
+        // console.log(this.data)
+        // const { list } = this.data
 
-        for (const item of list) {
-            this.obj[item.model] = item.options.defaultValue
-        }
+        // for (const item of list) {
+        //     this.obj[item.model] = item.options.defaultValue
+        // }
 
-        const objTest = deepCopy(this.obj)
-        console.log(objTest)
-        this.value.push(objTest)
+        // const objTest = deepCopy(this.obj)
+        // console.log(objTest)
+        // this.value.push(objTest)
+        this.initSubform()
     },
     methods: {
+        mergeDefaultValue (item, col) {
+            let test = deepCopy(item)
+            const { model } = test
+            test.options.defaultValue = col[model]
+            return test
+        },
+        initSubform () {
+            const { list, options } = this.data
+            let defaultValue = options.defaultValue || []
+
+            for (const item of list) {
+                this.obj[item.model] = item.options.defaultValue
+            }
+
+            if (defaultValue.length > 0) {
+                this.value = [ ...defaultValue ]
+            } else {
+                const objTest = deepCopy(this.obj)
+                this.value.push(objTest)
+            }
+        },
         add () {
             const objTest = deepCopy(this.obj)
             console.log(objTest)
