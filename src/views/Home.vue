@@ -10,7 +10,7 @@
                     <div class="c-title">{{ item.title }}</div>
                     <div class="c-list">
                         <draggable :list="item.list"
-                            :group="{ name: 'people', pull: 'clone', put: false }"
+                            :group="{ name: 'drag', pull: 'clone', put: false }"
                             :sort="false"
                             ghost-class='ghost'>
                             <el-card class="c-item" v-for="(cItem, index) in item.list" :key="index" shadow="hover" :body-style="CardBodyStyle">
@@ -130,5 +130,17 @@ export default {
     padding: 10px 15px;
     background-color: #eee;
 }
+
+// .ghost {
+//     background: #F56C6C;
+//     border: 2px solid #F56C6C;
+//     outline-width: 0;
+//     height: 3px;
+//     box-sizing: border-box;
+//     font-size: 0;
+//     content: '';
+//     overflow: hidden;
+//     padding: 0;
+// }
 
 </style>

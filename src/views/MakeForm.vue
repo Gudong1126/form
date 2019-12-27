@@ -2,21 +2,21 @@
     <div class="i-form">
         <div v-if="data.list.length === 0" class="empty">从左侧拖拽来添加字段</div>
         <el-form label-width="80px">
-            <draggable class="form-area" v-model="data.list"
-                :options="{
-                    group: 'people',
-                    //handle: '.drag-widget',
-                    'ghost-class': 'ghost',
-                    animation: '200'
-                }"
-                @add="handleWidgetAdd">
+            <draggable class="form-area"
+                v-model="data.list"
+                group="drag"
+                ghost-class="ghost"
+                animation="200"
+                @add="handleWidgetAdd"
+            >
                 <transition-group name="fade" tag="div" class="form-list">
                     <template v-for="(item, index) in data.list">
-                        <!-- @click.native.stop="handleClickFormItem(item)"> -->
                         <div :class="{ 'form-item': true, active: selectFormItem.key === item.key }"
                             v-if="item && item.key"
                             :key="item.key"
                             @click="handleClickFormItem(item)">
+                            <!-- @click.native.stop="handleClickFormItem(item)"> -->
+
                             <render-item :data="item" @configJsonData="configJsonData"></render-item>
                             <div class="form-item-handle" v-if="selectFormItem.key === item.key">
                                 <i class="el-icon-delete" @click.stop="handleDeleteFormItem(index)"></i>
@@ -53,12 +53,13 @@ export default {
         }
     },
     watch: {
-        // selectFormItem: {
-        //     handler (val) {
-        //         this.$emit('update:select', val)
-        //     },
-        //     deep: true
-        // }
+        selectFormItem: {
+            handler (val) {
+                console.log(val)
+                // this.$emit('update:select', val)
+            },
+            deep: true
+        },
         data: {
             handler (val) {
                 // console.log('makeForm' + JSON.stringify(val, null, 4))
@@ -164,6 +165,18 @@ export default {
         margin: 0 5px;
         cursor: pointer;
     }
+}
+
+.ghost {
+    background: #F56C6C;
+    border: 2px solid #F56C6C;
+    outline-width: 0;
+    height: 3px;
+    box-sizing: border-box;
+    font-size: 0;
+    content: '';
+    overflow: hidden;
+    padding: 0;
 }
 
 </style>

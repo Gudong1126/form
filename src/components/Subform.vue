@@ -3,16 +3,14 @@
         <table class="table table-striped">
             <thead class="thead-dark">
                 <draggable class="form-area" v-model="data.list"
-                    :options="{
-                        group: 'people',
-                        //handle: '.drag-widget',
-                        'ghost-class': 'ghost',
-                        animation: '200',
-                    }"
+                    group="drag"
+                    ghost-class="ghost"
+                    animation="200"
                     tag='tr'
-                    @add="handleWidgetAdd">
+                    @add="handleWidgetAdd"
+                >
                     <template v-for="header in data.list">
-                        <th v-if="header && header.key" :key="header.key" scope="col">
+                        <th class="th" scope="col" v-if="header && header.key" :key="header.key">
                             {{ header.name }}
                         </th>
                     </template>
@@ -164,6 +162,12 @@ export default {
 .table {
     height: 100%;
     width: 100%;
+    word-wrap: break-word;
+    word-break: break-all;
+}
+
+.th {
+    width: 50px;
 }
 
 </style>
