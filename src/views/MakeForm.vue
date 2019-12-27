@@ -141,6 +141,20 @@ export default {
     }
 }
 
+.i-form .form-list {
+    .ghost {
+        background: #F56C6C;
+        border: 2px solid #F56C6C;
+        outline-width: 0;
+        height: 3px;
+        box-sizing: border-box;
+        font-size: 0;
+        content: '';
+        overflow: hidden;
+        padding: 0;
+    }
+}
+
 .form-item {
     position: relative;
     margin: 5px 0;
@@ -165,18 +179,6 @@ export default {
         margin: 0 5px;
         cursor: pointer;
     }
-}
-
-.ghost {
-    background: #F56C6C;
-    border: 2px solid #F56C6C;
-    outline-width: 0;
-    height: 3px;
-    box-sizing: border-box;
-    font-size: 0;
-    content: '';
-    overflow: hidden;
-    padding: 0;
 }
 
 </style>

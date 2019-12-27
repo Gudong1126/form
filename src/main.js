@@ -4,6 +4,7 @@ import router from './router'
 import store from './store'
 
 import './assets/style/reset.css'
+import './assets/style/index.less'
 
 import './plugins/element.js'
 // import './plugins/draggable'

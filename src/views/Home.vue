@@ -12,7 +12,10 @@
                         <draggable :list="item.list"
                             :group="{ name: 'drag', pull: 'clone', put: false }"
                             :sort="false"
-                            ghost-class='ghost'>
+                            ghost-class='ghost'
+                            @start="handleDragStart"
+                            :move="move"
+                        >
                             <el-card class="c-item" v-for="(cItem, index) in item.list" :key="index" shadow="hover" :body-style="CardBodyStyle">
                                 <i :class="cItem.icon"></i>{{cItem.name}}
                             </el-card>
@@ -77,6 +80,13 @@ export default {
         }
     },
     methods: {
+        move (e) {
+            console.log(e)
+            return true
+        },
+        handleDragStart (e) {
+            console.log(e)
+        },
         toggleIt () {
             this.test = !this.test
         },
@@ -142,5 +152,26 @@ export default {
 //     overflow: hidden;
 //     padding: 0;
 // }
-
+// .chosen {
+    // background: #F56C6C;
+    // border: 2px solid #F56C6C;
+    // outline-width: 0;
+    // height: 3px;
+    // box-sizing: border-box;
+    // font-size: 0;
+    // content: '';
+    // overflow: hidden;
+    // padding: 0;
+// }
+// .drag {
+//     background: #F56C6C;
+//     border: 2px solid #F56C6C;
+//     outline-width: 0;
+//     height: 3px;
+//     box-sizing: border-box;
+//     font-size: 0;
+//     content: '';
+//     overflow: hidden;
+//     padding: 0;
+// }
 </style>

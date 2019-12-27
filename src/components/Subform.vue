@@ -1,6 +1,22 @@
 <template>
     <div class="subform">
-        <table class="table table-striped">
+        <draggable class="test-form-area" v-model="data.list"
+            group="drag"
+            ghost-class="ghost"
+            animation="200"
+            direction="vertical"
+            @add="handleWidgetAdd"
+        >
+            <template v-for="item in data.list">
+                <div class="test-form-item" v-if="item && item.key" :key="item.key">
+                    <div class="test-header">{{ item.name }}</div>
+                    <div class="test-cont">
+                        <render-item :data="item" :inSubform="true"></render-item>
+                    </div>
+                </div>
+            </template>
+        </draggable>
+        <!-- <table class="table table-striped">
             <thead class="thead-dark">
                 <draggable class="form-area" v-model="data.list"
                     group="drag"
@@ -28,7 +44,7 @@
                     </template>
                 </tr>
             </tbody>
-        </table>
+        </table> -->
         <!-- <button @click="add">添加</button> -->
     </div>
 </template>
@@ -145,8 +161,35 @@ export default {
 
 <style lang="less" scoped>
 
+.test-form-area {
+    display: flex;
+    min-height: 110px;
+    // width: 100%;
+    // height: 110px;
+    overflow-x: scroll;
+}
+.test-form-item {
+    flex: 0 0 180px;
+    // width: 180px;
+    // height: 100%;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    text-align: center;
+    .test-header {
+        height: 50px;
+        line-height: 50px;
+        border-bottom: 1px solid #ddd;
+        color: #909399;
+    }
+    .test-cont {
+        padding: 12px 10px;
+    }
+}
+
+// --------
 .subform {
-    min-height: 100px;
+    min-height: 110px;
+    // height: 110px;
     background-color: #eee;
 }
 .form-area {
@@ -162,12 +205,22 @@ export default {
 .table {
     height: 100%;
     width: 100%;
-    word-wrap: break-word;
-    word-break: break-all;
 }
 
 .th {
     width: 50px;
+}
+
+.ghost {
+    background: #F56C6C;
+    border: 2px solid #F56C6C;
+    outline-width: 0;
+    height: 3px;
+    box-sizing: border-box;
+    font-size: 0;
+    content: '';
+    overflow: hidden;
+    padding: 0;
 }
 
 </style>
