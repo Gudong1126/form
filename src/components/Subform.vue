@@ -8,16 +8,16 @@
                 @add="handleWidgetAdd"
             >
                 <template v-for="(item, index) in data.list">
-                    <div :class="{ 'item': true, active: selectFormItem.key === item.key }"
+                    <div :class="{ 'item': true, active: selectedItem.key === item.key }"
                         v-if="item && item.key" :key="item.key"
-                        @click="handleClickFormItem(item)"
+                        @click.stop="handleClickFormItem(item)"
                     >
                         <div class="header">{{ item.name }}</div>
                         <div class="content">
                             <render-item :data="item" :inSubform="true"></render-item>
                         </div>
 
-                        <div class="item-handle" v-if="selectFormItem.key === item.key">
+                        <div class="item-handle" v-if="selectedItem.key === item.key">
                             <i class="el-icon-delete" @click.stop="handleDeleteFormItem(index)"></i>
                         </div>
                     </div>
@@ -62,9 +62,13 @@ export default {
     },
     data () {
         return {
-            selectFormItem: {},
             value: [],
             obj: {}
+        }
+    },
+    computed: {
+        selectedItem () {
+            return this.$events.get('selectedItem')
         }
     },
     mounted () {
@@ -118,18 +122,21 @@ export default {
                 rules: []
             })
 
-            this.selectFormItem = this.data.list[newIndex]
+            this.setSelectedItem(this.data.list[newIndex])
         },
         handleDeleteFormItem (index) {
             if (this.data.list[index + 1]) {
-                this.selectFormItem = this.data.list[index + 1]
+                this.setSelectedItem(this.data.list[index + 1])
             } else {
-                this.selectFormItem = this.data.list[index - 1] || {}
+                this.setSelectedItem(this.data.list[index - 1] || {})
             }
             this.data.list.splice(index, 1)
         },
         handleClickFormItem (item) {
-            this.selectFormItem = item
+            this.setSelectedItem(item)
+        },
+        setSelectedItem (val) {
+            this.$events.set('selectedItem', val)
         }
     }
 }

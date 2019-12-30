@@ -11,14 +11,14 @@
             >
                 <transition-group name="fade" tag="div" class="list">
                     <template v-for="(item, index) in data.list">
-                        <div :class="{ 'item': true, active: selectFormItem.key === item.key }"
+                        <div :class="{ 'item': true, active: selectedItem.key === item.key }"
                             v-if="item && item.key"
                             :key="item.key"
                             @click="handleClickFormItem(item)"
                         >
                             <render-item :data="item" @configJsonData="configJsonData"></render-item>
 
-                            <div class="item-handle" v-if="selectFormItem.key === item.key">
+                            <div class="item-handle" v-if="selectedItem.key === item.key">
                                 <i class="el-icon-delete" @click.stop="handleDeleteFormItem(index)"></i>
                             </div>
                         </div>
@@ -48,18 +48,15 @@ export default {
     },
     data () {
         return {
-            selectFormItem: {},
             dataCopy: this.data // 保存一份配置信息的副本，也是最后获取到的配置信息
         }
     },
+    computed: {
+        selectedItem () {
+            return this.$events.get('selectedItem')
+        }
+    },
     watch: {
-        selectFormItem: {
-            handler (val) {
-                console.log(val)
-                // this.$emit('update:select', val)
-            },
-            deep: true
-        },
         data: {
             handler (val) {
                 // console.log('makeForm' + JSON.stringify(val, null, 4))
@@ -100,20 +97,23 @@ export default {
                 rules: []
             })
 
-            this.selectFormItem = this.data.list[newIndex]
+            this.setSelectedItem(this.data.list[newIndex])
             // console.log(this.selectFormItem)
         },
         handleDeleteFormItem (index) {
             if (this.data.list[index + 1]) {
-                this.selectFormItem = this.data.list[index + 1]
+                this.setSelectedItem(this.data.list[index + 1])
             } else {
-                this.selectFormItem = this.data.list[index - 1] || {}
+                this.setSelectedItem(this.data.list[index - 1] || {})
             }
             this.data.list.splice(index, 1)
         },
         handleClickFormItem (item) {
             console.log(item)
-            this.selectFormItem = item
+            this.setSelectedItem(item)
+        },
+        setSelectedItem (val) {
+            this.$events.set('selectedItem', val)
         }
     }
 }
