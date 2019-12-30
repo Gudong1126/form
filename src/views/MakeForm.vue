@@ -2,23 +2,23 @@
     <div class="i-form">
         <div v-if="data.list.length === 0" class="empty">从左侧拖拽来添加字段</div>
         <el-form label-width="80px">
-            <draggable class="form-area"
+            <draggable class="drag-area"
                 v-model="data.list"
                 group="drag"
                 ghost-class="ghost"
                 animation="200"
                 @add="handleWidgetAdd"
             >
-                <transition-group name="fade" tag="div" class="form-list">
+                <transition-group name="fade" tag="div" class="list">
                     <template v-for="(item, index) in data.list">
-                        <div :class="{ 'form-item': true, active: selectFormItem.key === item.key }"
+                        <div :class="{ 'item': true, active: selectFormItem.key === item.key }"
                             v-if="item && item.key"
                             :key="item.key"
-                            @click="handleClickFormItem(item)">
-                            <!-- @click.native.stop="handleClickFormItem(item)"> -->
-
+                            @click="handleClickFormItem(item)"
+                        >
                             <render-item :data="item" @configJsonData="configJsonData"></render-item>
-                            <div class="form-item-handle" v-if="selectFormItem.key === item.key">
+
+                            <div class="item-handle" v-if="selectFormItem.key === item.key">
                                 <i class="el-icon-delete" @click.stop="handleDeleteFormItem(index)"></i>
                             </div>
                         </div>
@@ -112,7 +112,7 @@ export default {
             this.data.list.splice(index, 1)
         },
         handleClickFormItem (item) {
-            // console.log(item)
+            console.log(item)
             this.selectFormItem = item
         }
     }
@@ -126,10 +126,33 @@ export default {
     width: 100%;
     background-color: #fff;
     position: relative;
-    // padding: 2px;
-    .form-area, .form-list {
+    .drag-area, .list {
         min-height: 500px;
     }
+
+    .item {
+        position: relative;
+        margin: 5px 0;
+        padding: 5px;
+        border: 1px dashed rgba(170,170,170,0.7);
+        background-color: rgba(236, 245, 255, .3);
+        &:hover{
+            background: #ecf5ff;
+            outline: 1px solid #409EFF;
+            outline-offset: 0px;
+        }
+        // &::after {
+        //     position: absolute;
+        //     left: 0;
+        //     right: 0;
+        //     top: 0;
+        //     bottom: 0;
+        //     display: block;
+        //     z-index: 8;
+        //     content: '';
+        // }
+    }
+
     .empty {
         position: absolute;
         text-align: center;
@@ -138,46 +161,6 @@ export default {
         right: 0;
         top: 150px;
         color: #ccc;
-    }
-}
-
-.i-form .form-list {
-    .ghost {
-        background: #F56C6C;
-        border: 2px solid #F56C6C;
-        outline-width: 0;
-        height: 3px;
-        box-sizing: border-box;
-        font-size: 0;
-        content: '';
-        overflow: hidden;
-        padding: 0;
-    }
-}
-
-.form-item {
-    position: relative;
-    margin: 5px 0;
-    padding: 5px;
-    border: 1px dashed rgba(170,170,170,0.7);
-}
-.active {
-    border: 2px solid #409EFF;
-}
-
-.form-item-handle {
-    position: absolute;
-    right: 0;
-    bottom: 0;
-    height: 28px;
-    line-height: 28px;
-    background: rgba(64, 158, 255, 0.59);
-    z-index: 9;
-    i {
-        font-size: 14px;
-        color: #fff;
-        margin: 0 5px;
-        cursor: pointer;
     }
 }
 

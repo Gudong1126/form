@@ -1,7 +1,5 @@
 <template>
-    <div>
-        <el-input v-model="value" placeholder="文本框"></el-input>
-    </div>
+    <el-input v-model="value" placeholder="文本框"></el-input>
 </template>
 
 <script>

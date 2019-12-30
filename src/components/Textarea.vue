@@ -1,9 +1,5 @@
 <template>
-    <div>
-        <!-- <el-form-item label="多行文本"> -->
-            <el-input type="textarea" v-model="value" placeholder="多行文本"></el-input>
-        <!-- </el-form-item> -->
-    </div>
+    <el-input type="textarea" v-model="value" placeholder="多行文本"></el-input>
 </template>
 
 <script>

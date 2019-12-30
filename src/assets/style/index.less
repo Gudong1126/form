@@ -1,27 +1,46 @@
-.i-form .form-list {
-    .ghost {
-        background: #F56C6C;
-        border: 2px solid #F56C6C;
-        outline-width: 0;
-        height: 3px;
-        box-sizing: border-box;
-        font-size: 0;
-        content: '';
-        overflow: hidden;
-        padding: 0;
+.i-form .drag-area .list, .subform .drag-area {
+    .item {
+        .item-handle {
+            position: absolute;
+            right: 0;
+            bottom: 0;
+            height: 28px;
+            line-height: 28px;
+            background: rgba(64, 158, 255, 0.59);
+            z-index: 9;
+            i {
+                font-size: 14px;
+                color: #fff;
+                margin: 0 5px;
+                cursor: pointer;
+            }
+        }
+    }
+    .active {
+        border: 2px solid #409EFF;
     }
 }
 
-.i-form .form-list .form-item .subform .test-form-area {
-    .ghost1 {
-        background: #F56C6C;
-        border: 2px solid #F56C6C;
-        outline-width: 0; 
-        flex: 0 0 3px;
-        box-sizing: border-box;
-        font-size: 0;
-        content: '';
-        overflow: hidden;
-        padding: 0;
-    }
+.i-form .drag-area .list .ghost{
+    background: #F56C6C;
+    border: 2px solid #F56C6C;
+    outline-width: 0;
+    height: 3px;
+    box-sizing: border-box;
+    font-size: 0;
+    content: '';
+    overflow: hidden;
+    padding: 0;
+}
+
+.i-form .subform .drag-area .subform-ghost {
+    background: #F56C6C;
+    border: 2px solid #F56C6C;
+    outline-width: 0; 
+    flex: 0 0 3px;
+    box-sizing: border-box;
+    font-size: 0;
+    content: '';
+    overflow: hidden;
+    padding: 0;
 }

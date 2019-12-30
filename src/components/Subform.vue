@@ -1,23 +1,23 @@
 <template>
     <div class="subform">
         <template v-if="!isMade">
-            <draggable class="test-form-area" v-model="data.list"
+            <draggable class="drag-area" v-model="data.list"
                 group="drag"
-                ghost-class="ghost1"
+                ghost-class="subform-ghost"
                 animation="200"
                 @add="handleWidgetAdd"
             >
                 <template v-for="(item, index) in data.list">
-                    <div class="test-form-item"
-                        :class="{ active: selectFormItem.key === item.key }"
+                    <div :class="{ 'item': true, active: selectFormItem.key === item.key }"
                         v-if="item && item.key" :key="item.key"
-                        @click="handleClickFormItem(item)">
-                        <div class="test-header">{{ item.name }}</div>
-                        <div class="test-cont">
+                        @click="handleClickFormItem(item)"
+                    >
+                        <div class="header">{{ item.name }}</div>
+                        <div class="content">
                             <render-item :data="item" :inSubform="true"></render-item>
                         </div>
 
-                        <div class="form-item-handle" v-if="selectFormItem.key === item.key">
+                        <div class="item-handle" v-if="selectFormItem.key === item.key">
                             <i class="el-icon-delete" @click.stop="handleDeleteFormItem(index)"></i>
                         </div>
                     </div>
@@ -137,85 +137,29 @@ export default {
 
 <style lang="less" scoped>
 
-.test-form-area {
-    display: flex;
-    min-height: 110px;
-    // width: 100%;
-    // height: 110px;
-    overflow-x: scroll;
-}
-.test-form-item {
-    position: relative;
-    flex: 0 0 180px;
-    // width: 180px;
-    // height: 100%;
-    background-color: #fff;
-    border: 1px solid #ddd;
-    text-align: center;
-    .test-header {
-        height: 50px;
-        line-height: 50px;
-        border-bottom: 1px solid #ddd;
-        color: #909399;
-    }
-    .test-cont {
-        padding: 12px 10px;
-    }
-}
-
-// --------
 .subform {
-    // min-height: 110px;
-    // height: 110px;
     background-color: #eee;
-}
-.form-area {
-    height: 50px;
-}
-// .form-area, .form-list {
-//     width: 100%;
-//     min-height: 100px;
-// }
-.form-item {
-    width: 200px;
-}
-.table {
-    height: 100%;
-    width: 100%;
-}
-
-.th {
-    width: 50px;
-}
-
-// .ghost {
-//     background: #F56C6C;
-//     border: 2px solid #F56C6C;
-//     outline-width: 0;
-//     height: 3px;
-//     box-sizing: border-box;
-//     font-size: 0;
-//     content: '';
-//     overflow: hidden;
-//     padding: 0;
-// }
-.active {
-    border: 2px solid #409EFF;
-}
-
-.form-item-handle {
-    position: absolute;
-    right: 0;
-    bottom: 0;
-    height: 28px;
-    line-height: 28px;
-    background: rgba(64, 158, 255, 0.59);
-    z-index: 9;
-    i {
-        font-size: 14px;
-        color: #fff;
-        margin: 0 5px;
-        cursor: pointer;
+    .drag-area {
+        display: flex;
+        min-height: 110px;
+        overflow-x: scroll;
+    }
+    .item {
+        position: relative;
+        flex: 0 0 180px;
+        background-color: #fff;
+        border: 1px solid #ddd;
+        text-align: center;
+        .header {
+            height: 50px;
+            line-height: 50px;
+            border-bottom: 1px solid #ddd;
+            color: #909399;
+        }
+        .content {
+            padding: 12px 10px;
+        }
     }
 }
+
 </style>
