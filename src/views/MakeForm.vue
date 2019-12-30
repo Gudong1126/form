@@ -14,7 +14,7 @@
                         <div :class="{ 'item': true, active: selectedItem.key === item.key }"
                             v-if="item && item.key"
                             :key="item.key"
-                            @click="handleClickFormItem(item)"
+                            @click.stop="handleClickFormItem(item)"
                         >
                             <render-item :data="item" @configJsonData="configJsonData"></render-item>
 
