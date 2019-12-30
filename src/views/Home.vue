@@ -141,37 +141,4 @@ export default {
     background-color: #eee;
 }
 
-// .ghost {
-//     background: #F56C6C;
-//     border: 2px solid #F56C6C;
-//     outline-width: 0;
-//     height: 3px;
-//     box-sizing: border-box;
-//     font-size: 0;
-//     content: '';
-//     overflow: hidden;
-//     padding: 0;
-// }
-// .chosen {
-    // background: #F56C6C;
-    // border: 2px solid #F56C6C;
-    // outline-width: 0;
-    // height: 3px;
-    // box-sizing: border-box;
-    // font-size: 0;
-    // content: '';
-    // overflow: hidden;
-    // padding: 0;
-// }
-// .drag {
-//     background: #F56C6C;
-//     border: 2px solid #F56C6C;
-//     outline-width: 0;
-//     height: 3px;
-//     box-sizing: border-box;
-//     font-size: 0;
-//     content: '';
-//     overflow: hidden;
-//     padding: 0;
-// }
 </style>

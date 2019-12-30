@@ -1,50 +1,41 @@
 <template>
     <div class="subform">
-        <draggable class="test-form-area" v-model="data.list"
-            group="drag"
-            ghost-class="ghost"
-            animation="200"
-            direction="vertical"
-            @add="handleWidgetAdd"
-        >
-            <template v-for="item in data.list">
-                <div class="test-form-item" v-if="item && item.key" :key="item.key">
-                    <div class="test-header">{{ item.name }}</div>
-                    <div class="test-cont">
-                        <render-item :data="item" :inSubform="true"></render-item>
+        <template v-if="!isMade">
+            <draggable class="test-form-area" v-model="data.list"
+                group="drag"
+                ghost-class="ghost1"
+                animation="200"
+                @add="handleWidgetAdd"
+            >
+                <template v-for="(item, index) in data.list">
+                    <div class="test-form-item"
+                        :class="{ active: selectFormItem.key === item.key }"
+                        v-if="item && item.key" :key="item.key"
+                        @click="handleClickFormItem(item)">
+                        <div class="test-header">{{ item.name }}</div>
+                        <div class="test-cont">
+                            <render-item :data="item" :inSubform="true"></render-item>
+                        </div>
+
+                        <div class="form-item-handle" v-if="selectFormItem.key === item.key">
+                            <i class="el-icon-delete" @click.stop="handleDeleteFormItem(index)"></i>
+                        </div>
                     </div>
-                </div>
-            </template>
-        </draggable>
-        <!-- <table class="table table-striped">
-            <thead class="thead-dark">
-                <draggable class="form-area" v-model="data.list"
-                    group="drag"
-                    ghost-class="ghost"
-                    animation="200"
-                    tag='tr'
-                    @add="handleWidgetAdd"
-                >
-                    <template v-for="header in data.list">
-                        <th class="th" scope="col" v-if="header && header.key" :key="header.key">
-                            {{ header.name }}
-                        </th>
-                    </template>
-                </draggable>
-            </thead>
-            <tbody>
-                <tr v-for="(col, index) in value" :key="index">
-                    <template v-for="(item) in data.list">
-                        <td :class="{ 'form-item': true, active: selectFormItem.key === item.key }"
-                            v-if="item && item.key"
-                            :key="item.key + '' + index"
-                            @click.native.stop="handleClickFormItem(item)">
-                            <render-item :data="mergeDefaultValue(item, col)" :inSubform="true" @change="onChange(...arguments, col)"></render-item>
-                        </td>
-                    </template>
-                </tr>
-            </tbody>
-        </table> -->
+                </template>
+            </draggable>
+        </template>
+
+        <template v-else>
+            <el-table :data="value">
+                <template v-for="item in data.list">
+                    <el-table-column v-if="item && item.key" :key="item.key" :label="item.name" align="center">
+                        <template slot-scope="scope">
+                            <render-item :data="mergeDefaultValue(item, scope.row)" :inSubform="true" @change="onChange(...arguments, scope.row)"></render-item>
+                        </template>
+                    </el-table-column>
+                </template>
+            </el-table>
+        </template>
         <!-- <button @click="add">添加</button> -->
     </div>
 </template>
@@ -77,16 +68,6 @@ export default {
         }
     },
     mounted () {
-        // console.log(this.data)
-        // const { list } = this.data
-
-        // for (const item of list) {
-        //     this.obj[item.model] = item.options.defaultValue
-        // }
-
-        // const objTest = deepCopy(this.obj)
-        // console.log(objTest)
-        // this.value.push(objTest)
         this.initSubform()
     },
     methods: {
@@ -119,11 +100,6 @@ export default {
             console.log(this.data)
         },
         onChange (key, val, row) {
-            // console.log(this.data)
-            // console.log(this.obj)
-            // console.log(key)
-            // console.log(val)
-            // console.log(row)
             row[key] = val
             this.$emit('change', this.data.model, this.value)
         },
@@ -169,6 +145,7 @@ export default {
     overflow-x: scroll;
 }
 .test-form-item {
+    position: relative;
     flex: 0 0 180px;
     // width: 180px;
     // height: 100%;
@@ -188,7 +165,7 @@ export default {
 
 // --------
 .subform {
-    min-height: 110px;
+    // min-height: 110px;
     // height: 110px;
     background-color: #eee;
 }
@@ -211,16 +188,34 @@ export default {
     width: 50px;
 }
 
-.ghost {
-    background: #F56C6C;
-    border: 2px solid #F56C6C;
-    outline-width: 0;
-    height: 3px;
-    box-sizing: border-box;
-    font-size: 0;
-    content: '';
-    overflow: hidden;
-    padding: 0;
+// .ghost {
+//     background: #F56C6C;
+//     border: 2px solid #F56C6C;
+//     outline-width: 0;
+//     height: 3px;
+//     box-sizing: border-box;
+//     font-size: 0;
+//     content: '';
+//     overflow: hidden;
+//     padding: 0;
+// }
+.active {
+    border: 2px solid #409EFF;
 }
 
+.form-item-handle {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    height: 28px;
+    line-height: 28px;
+    background: rgba(64, 158, 255, 0.59);
+    z-index: 9;
+    i {
+        font-size: 14px;
+        color: #fff;
+        margin: 0 5px;
+        cursor: pointer;
+    }
+}
 </style>
