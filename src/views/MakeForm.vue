@@ -11,7 +11,12 @@
             >
                 <transition-group name="fade" tag="div" class="list">
                     <template v-for="(item, index) in data.list">
-                        <div :class="{ 'item': true, active: selectedItem.key === item.key }"
+                        <div :class="{
+                            'item': true,
+                            // TODO: 暂时用这这种比较
+                            'layouts': item.type === 'Tabs' || item.type === 'Subform',
+                            active: selectedItem.key === item.key
+                        }"
                             v-if="item && item.key"
                             :key="item.key"
                             @click.stop="handleClickFormItem(item)"
@@ -134,13 +139,6 @@ export default {
         position: relative;
         margin: 5px 0;
         padding: 5px;
-        border: 1px dashed rgba(170,170,170,0.7);
-        background-color: rgba(236, 245, 255, .3);
-        &:hover{
-            background: #ecf5ff;
-            outline: 1px solid #409EFF;
-            outline-offset: 0px;
-        }
         // &::after {
         //     position: absolute;
         //     left: 0;

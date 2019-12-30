@@ -1,12 +1,19 @@
-.i-form .drag-area .list, .subform .drag-area {
+.i-form .drag-area .list {
     .item {
+        border: 1px dashed rgba(170,170,170,0.7);
+        background-color: rgba(236, 245, 255, .3);
+        &:hover{
+            background: #ecf5ff;
+            outline: 1px solid #409EFF;
+            outline-offset: 0px;
+        }
         .item-handle {
             position: absolute;
             right: 0;
             bottom: 0;
             height: 28px;
             line-height: 28px;
-            background: rgba(64, 158, 255, 0.59);
+            background: rgba(64, 158, 255);
             z-index: 9;
             i {
                 font-size: 14px;
@@ -16,10 +23,36 @@
             }
         }
     }
+    .layouts {
+        border: 1px dashed rgba(170, 170, 170, 0.7);
+        background-color: rgba(250, 244, 235, 0.3);
+        &:hover{
+            background: rgba(255, 237, 211, 0.3);
+            outline: 1px solid rgb(230, 162, 60);
+            outline-offset: 0px;
+        }
+    }
+
     .active {
         border: 2px solid #409EFF;
+        &:hover {
+            outline: none;
+        }
+    }
+
+    .item[class~="layouts"] {
+        &[class~="active"] {
+            border: 2px solid rgb(230, 162, 60);
+            &:hover {
+                outline: none;
+            }
+            .item-handle {
+                background: rgb(230, 162, 60);
+            }
+        }
     }
 }
+
 
 .i-form .drag-area .list .ghost{
     background: #F56C6C;

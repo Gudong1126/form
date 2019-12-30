@@ -8,7 +8,12 @@
                 @add="handleWidgetAdd"
             >
                 <template v-for="(item, index) in data.list">
-                    <div :class="{ 'item': true, active: selectedItem.key === item.key }"
+                    <div :class="{
+                        'item': true,
+                        // TODO: 暂时用这这种比较
+                        'layouts': item.type === 'Tabs' || item.type === 'Subform',
+                        active: selectedItem.key === item.key
+                    }"
                         v-if="item && item.key" :key="item.key"
                         @click.stop="handleClickFormItem(item)"
                     >

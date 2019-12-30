@@ -137,7 +137,7 @@ export default {
 }
 
 .area-container {
-    padding: 10px 15px;
+    padding: 5px 10px;
     background-color: #eee;
 }
 
