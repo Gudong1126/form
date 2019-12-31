@@ -55,7 +55,9 @@ export default {
             handler (val) {
                 // 监听list的变化，并将 data 的副本向上传播
                 this.dataCopy.options.tabs = val
-                this.$emit('configJsonData', this.dataCopy)
+
+                this.$events.updateFormItem(this.dataCopy)
+                // 这里本质也是修改了某个元素
             },
             deep: true
         }

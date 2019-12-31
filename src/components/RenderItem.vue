@@ -54,7 +54,6 @@ export default {
 
                 // })
                 instance.$on('change', this.onChange)
-                instance.$on('configJsonData', this.configJsonData)
 
                 // 挂载到 ID 为 plateContainer 的DOM元素
                 if (this.inSubform || templateName === 'Tabs') {
@@ -70,9 +69,6 @@ export default {
         },
         onChange (key, val) {
             this.$emit('change', key, val)
-        },
-        configJsonData (val) {
-            this.$emit('configJsonData', val)
         },
         async getData () {
             const childrenFormData = this.instance.getData

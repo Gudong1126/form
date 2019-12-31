@@ -79,19 +79,23 @@ export default {
             test: true
         }
     },
+    mounted () {
+        this.$events.set('formConfig', this.form)
+    },
     methods: {
         move (e) {
-            console.log(e)
+            // console.log(e)
             return true
         },
         handleDragStart (e) {
-            console.log(e)
+            // console.log(e)
         },
         toggleIt () {
             this.test = !this.test
         },
         handlePreview () {
-            this.formConfig = this.$refs.makeForm.dataCopy
+            // this.formConfig = this.$refs.makeForm.dataCopy
+            this.formConfig = this.$events.get('formConfig')
             this.dialogVisible = true
         },
         async getData () {

@@ -21,7 +21,7 @@
                             :key="item.key"
                             @click.stop="handleClickFormItem(item)"
                         >
-                            <render-item :data="item" @configJsonData="configJsonData"></render-item>
+                            <render-item :data="item"></render-item>
 
                             <div class="item-handle" v-if="selectedItem.key === item.key">
                                 <i class="el-icon-delete" @click.stop="handleDeleteFormItem(index)"></i>
@@ -51,11 +51,6 @@ export default {
             default: null
         }
     },
-    data () {
-        return {
-            dataCopy: this.data // 保存一份配置信息的副本，也是最后获取到的配置信息
-        }
-    },
     computed: {
         selectedItem () {
             return this.$events.get('selectedItem')
@@ -65,24 +60,15 @@ export default {
         data: {
             handler (val) {
                 // console.log('makeForm' + JSON.stringify(val, null, 4))
-                this.$emit('configJsonChange', val)
+                // console.log('make form =', val)
             },
             deep: true
         }
     },
     mounted () {
-        // console.log(this.data)
-        // console.log('makeForm' + JSON.stringify(this.data, null, 4))
+
     },
     methods: {
-        configJsonData (val) {
-            const { key } = val
-            const { list } = this.data
-
-            this.dataCopy.list = list.map(item => {
-                return item.key === key ? val : item
-            })
-        },
         handleWidgetAdd (e) {
             // console.log(e)
             // console.log(this.data)
