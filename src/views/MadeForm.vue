@@ -1,9 +1,13 @@
 <template>
     <div>
-        <el-form label-width="80px" :model="formData" ref="form">
+        <el-form ref="form"
+            :model="formData"
+            :label-width="data.config.labelWidth + 'px'"
+            :label-position="data.config.labelPosition"
+            :size="data.config.size"
+        >
             <template v-for="item in data.list">
-                <render-item
-                    v-if="item && item.key"
+                <render-item v-if="item && item.key"
                     ref="renderItem"
                     :data="item"
                     :key="item.key"

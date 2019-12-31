@@ -28,9 +28,16 @@
                 <make-form ref="makeForm" :data="form"></make-form>
             </el-container>
 
-            <!-- <el-aside class="area-config" width="250px">
-                sdfs
-            </el-aside> -->
+            <el-aside class="area-config" width="250px">
+                <el-tabs class="nav" v-model="activeName">
+                    <el-tab-pane label="字段属性" name="first">
+                        <item-config></item-config>
+                    </el-tab-pane>
+                    <el-tab-pane label="表单属性" name="second">
+                        <form-config></form-config>
+                    </el-tab-pane>
+                </el-tabs>
+            </el-aside>
         </el-container>
 
         <el-dialog title="预览" :visible.sync="dialogVisible">
@@ -50,6 +57,8 @@
 import draggable from 'vuedraggable'
 import MakeForm from './MakeForm'
 import MadeForm from './MadeForm'
+import FormConfig from './FormConfig'
+import ItemConfig from './ItemConfig'
 
 import { components } from '../config/components'
 
@@ -58,7 +67,9 @@ export default {
     components: {
         draggable,
         MakeForm,
-        MadeForm
+        MadeForm,
+        FormConfig,
+        ItemConfig
     },
     data () {
         return {
@@ -66,21 +77,12 @@ export default {
             CardBodyStyle: {
                 padding: '8px 5px'
             },
-            form: {
-                list: [],
-                config: {
-                    labelWidth: 100,
-                    labelPosition: 'right',
-                    size: 'small'
-                }
-            },
+            form: this.$events.get('formConfig'),
             dialogVisible: false,
             formConfig: {},
-            test: true
+            test: true,
+            activeName: 'first'
         }
-    },
-    mounted () {
-        this.$events.set('formConfig', this.form)
     },
     methods: {
         move (e) {
@@ -94,7 +96,6 @@ export default {
             this.test = !this.test
         },
         handlePreview () {
-            // this.formConfig = this.$refs.makeForm.dataCopy
             this.formConfig = this.$events.get('formConfig')
             this.dialogVisible = true
         },
@@ -107,42 +108,54 @@ export default {
 </script>
 
 <style lang="less" scoped>
-.header {
-    background-color: #f8f8f8;
-    border-bottom: 1px solid #ddd;
+
+.area-config {
+    .nav /deep/ .el-tabs__nav {
+        width: 100%;
+        .el-tabs__item {
+            width: 50%;
+            padding: 0;
+            text-align: center;
+        }
+    }
 }
+
 .home {
     height: calc(100% - 60px);
-}
-.container {
-    height: 100%;
-}
-
-.area-components {
-    padding: 10px;
-    .c-title {
-        padding: 0 5px 8px;
+    .header {
+        background-color: #f8f8f8;
+        border-bottom: 1px solid #ddd;
     }
-    .c-item {
-        float: left;
-        width: 47%;
-        margin: 1%;
-        cursor: move;
-        background: #F4F6FC;
-        i {
-            text-indent: .5em;
-            padding-right: 5px;
+    .container {
+        height: 100%;
+        .area-components {
+            padding: 10px;
+            .c-title {
+                padding: 0 5px 8px;
+            }
+            .c-item {
+                float: left;
+                width: 47%;
+                margin: 1%;
+                cursor: move;
+                background: #F4F6FC;
+                i {
+                    text-indent: .5em;
+                    padding-right: 5px;
+                }
+                &:hover {
+                    border: 1px dashed #409EFF;
+                    color: #409EFF;
+                }
+            }
         }
-        &:hover {
-            border: 1px dashed #409EFF;
-            color: #409EFF;
+
+        .area-container {
+            padding: 5px 10px;
+            background-color: #eee;
         }
     }
-}
 
-.area-container {
-    padding: 5px 10px;
-    background-color: #eee;
 }
 
 </style>

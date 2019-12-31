@@ -1,7 +1,7 @@
 <template>
     <div>
         <el-tabs v-model="activeName">
-            <template v-for="(item, index) in list">
+            <template v-for="(item, index) in tabs">
                 <el-tab-pane :key="index" :label="item.title" :name="item.title">
                     <template v-if="isMade">
                         <made-form v-if="item.list.length > 0" ref="form" :data="item"></made-form>
@@ -36,28 +36,33 @@ export default {
     },
     data () {
         return {
-            selectFormItem: {},
             activeName: 'tabs1',
             dataCopy: {},
-            list: []
+            tabs: []
         }
     },
     watch: {
         data: {
             handler (val) {
-                // 将list复制，否则可能会出现循环引用
+                // 将 tabs data 复制，否则可能会出现循环引用
+                const tabs = deepCopy(this.data.options.tabs)
+                let formConfig = this.$events.get('formConfig')
+
                 this.dataCopy = deepCopy(this.data)
-                this.list = deepCopy(this.data.options.tabs)
+                this.tabs = tabs.map(item => {
+                    return {
+                        ...item,
+                        config: formConfig.config
+                    }
+                })
             },
             deep: true
         },
-        list: {
+        tabs: {
             handler (val) {
-                // 监听list的变化，并将 data 的副本向上传播
+                // 监听 tabs 的变化，这里本质也是修改了某个元素
                 this.dataCopy.options.tabs = val
-
                 this.$events.updateFormItem(this.dataCopy)
-                // 这里本质也是修改了某个元素
             },
             deep: true
         }

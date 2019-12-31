@@ -1,7 +1,11 @@
 <template>
     <div class="i-form">
         <div v-if="data.list.length === 0" class="empty">从左侧拖拽来添加字段</div>
-        <el-form label-width="80px">
+        <el-form
+            :label-width="data.config.labelWidth + 'px'"
+            :label-position="data.config.labelPosition"
+            :size="data.config.size"
+        >
             <draggable class="drag-area"
                 v-model="data.list"
                 group="drag"
