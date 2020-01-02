@@ -13,8 +13,6 @@
                             :group="{ name: 'drag', pull: 'clone', put: false }"
                             :sort="false"
                             ghost-class='ghost'
-                            @start="handleDragStart"
-                            :move="move"
                         >
                             <el-card class="c-item" v-for="(cItem, index) in item.list" :key="index" shadow="hover" :body-style="CardBodyStyle">
                                 <i :class="cItem.icon"></i>{{cItem.name}}
@@ -85,13 +83,6 @@ export default {
         }
     },
     methods: {
-        move (e) {
-            // console.log(e)
-            return true
-        },
-        handleDragStart (e) {
-            // console.log(e)
-        },
         toggleIt () {
             this.test = !this.test
         },
@@ -131,7 +122,16 @@ export default {
         .area-components {
             padding: 10px;
             .c-title {
-                padding: 0 5px 8px;
+                padding: 5px 8px;
+                font-size: 13px;
+            }
+            .c-list {
+                padding-bottom: 10px;
+                &:after{
+                    clear: both;
+                    display: block;
+                    content: " ";
+                }
             }
             .c-item {
                 float: left;
@@ -139,6 +139,7 @@ export default {
                 margin: 1%;
                 cursor: move;
                 background: #F4F6FC;
+                font-size: 12px;
                 i {
                     text-indent: .5em;
                     padding-right: 5px;

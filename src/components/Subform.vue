@@ -150,7 +150,8 @@ export default {
 <style lang="less" scoped>
 
 .subform {
-    background-color: #eee;
+    background-color: #fff;
+    border: 1px solid #EBEEF5;
     .drag-area {
         display: flex;
         min-height: 110px;
@@ -162,6 +163,7 @@ export default {
         background-color: #fff;
         border: 1px solid #ddd;
         text-align: center;
+        margin: 1px;
         .header {
             height: 50px;
             line-height: 50px;
