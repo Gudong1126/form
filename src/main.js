@@ -6,6 +6,7 @@ import event from './store.js'
 
 import './assets/style/reset.css'
 import './assets/style/index.less'
+import 'jsoneditor/dist/jsoneditor.css'
 
 import './plugins/element.js'
 // import './plugins/draggable'

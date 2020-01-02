@@ -1,7 +1,10 @@
 <template>
     <div class="home">
         <el-header class="header">
-            <el-button type="primary" @click="handlePreview">预览</el-button>
+            <div class="btn-group">
+                <el-button type="text" @click="handlePreview">预览</el-button>
+                <el-button type="text" @click="handlePreviewJson">查看JSON</el-button>
+            </div>
         </el-header>
 
         <el-container class="container">
@@ -40,12 +43,18 @@
 
         <el-dialog title="预览" :visible.sync="dialogVisible">
             <div v-if="dialogVisible">
-                <made-form v-show="test" ref="form" :data="formConfig"></made-form>
+                <made-form ref="form" :data="formConfig"></made-form>
             </div>
             <span slot="footer">
-                <el-button @click="toggleIt">显示/隐藏</el-button>
                 <el-button type="primary" @click="getData">获取数据</el-button>
                 <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
+            </span>
+        </el-dialog>
+
+        <el-dialog title="JSON" :visible.sync="dialogConfigJsonVisible">
+            <div v-if="dialogConfigJsonVisible" id="jsoneditor" style="width: 100%; height: 400px;"></div>
+            <span slot="footer">
+                <el-button type="primary" @click="dialogConfigJsonVisible = false">确 定</el-button>
             </span>
         </el-dialog>
     </div>
@@ -57,7 +66,7 @@ import MakeForm from './MakeForm'
 import MadeForm from './MadeForm'
 import FormConfig from './FormConfig'
 import ItemConfig from './ItemConfig'
-
+import JSONEditor from 'jsoneditor'
 import { components } from '../config/components'
 
 export default {
@@ -77,22 +86,40 @@ export default {
             },
             form: this.$events.get('formConfig'),
             dialogVisible: false,
+            dialogConfigJsonVisible: false,
             formConfig: {},
-            test: true,
-            activeName: 'first'
+            activeName: 'first',
+            jsonData: {}
         }
     },
     methods: {
-        toggleIt () {
-            this.test = !this.test
-        },
         handlePreview () {
             this.formConfig = this.$events.get('formConfig')
             this.dialogVisible = true
         },
+        handlePreviewJson () {
+            this.jsonData = this.$events.get('formConfig')
+            this.previewJson()
+        },
+        previewJson () {
+            this.dialogConfigJsonVisible = true
+
+            this.$nextTick(() => {
+                let container = document.querySelector('#jsoneditor')
+                let options = {
+                    mode: 'code',
+                    mainMenuBar: false
+                }
+                let editor = new JSONEditor(container, options)
+
+                editor.set(this.jsonData)
+            })
+        },
         async getData () {
             const data = await this.$refs.form.handelGetFormData()
             console.log(data)
+            this.jsonData = data
+            this.previewJson()
         }
     }
 }
@@ -116,6 +143,10 @@ export default {
     .header {
         background-color: #f8f8f8;
         border-bottom: 1px solid #ddd;
+        .btn-group {
+            float: right;
+            line-height: 60px;
+        }
     }
     .container {
         height: 100%;
