@@ -1,6 +1,9 @@
 <template>
     <div class="container">
-        <el-form-item v-if="!inSubform && data.type !== 'Tabs'" :label="data.name">
+        <el-form-item v-if="!inSubform && data.type !== 'Tabs'"
+            :label="data.name"
+            :required="data.options.required"
+            :prop="data.model">
             <div class="form-item"></div>
         </el-form-item>
         <div v-else class="layouts-item"></div>

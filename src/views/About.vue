@@ -3,8 +3,6 @@
         <h1>This is an about page</h1>
         <el-tabs v-model="activeName">
             <el-tab-pane label="用户管理" name="first">
-                <el-input v-model="a"></el-input>
-
                 <div class="test"></div>
             </el-tab-pane>
             <el-tab-pane label="配置管理" name="second">配置管理</el-tab-pane>

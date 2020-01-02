@@ -5,6 +5,7 @@
             :label-width="data.config.labelWidth + 'px'"
             :label-position="data.config.labelPosition"
             :size="data.config.size"
+            :rules="rules"
         >
             <template v-for="item in data.list">
                 <render-item v-if="item && item.key"
@@ -75,11 +76,17 @@ export default {
 
             for (let i = 0; i < list.length; i++) {
                 if (!layoutEl.includes(list[i].type)) {
-                    this.formData[list[i].model] = list[i].options.defaultValue
+                    this.$set(this.formData, list[i].model, list[i].options.defaultValue)
+                }
+                if (list[i].rules && list[i].rules.length > 0) {
+                    this.rules[list[i].model] = list[i].rules.map(item => {
+                        return item
+                    })
                 }
             }
             // console.log(this.formData)
-            console.log(JSON.stringify(this.data, null, 4))
+            // console.log(this.rules)
+            // console.log(JSON.stringify(this.data, null, 4))
         },
         handelGetFormData () {
             return new Promise((resolve, reject) => {
@@ -96,7 +103,9 @@ export default {
                         }
                         resolve(data)
                     } else {
-                        reject(new Error('表单数据校验失败').message)
+                        // resolve({ ...this.formData })
+                        // reject(new Error('表单数据校验失败').message)
+                        // resolve({})
                     }
                 })
             })
