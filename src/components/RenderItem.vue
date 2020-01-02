@@ -29,13 +29,12 @@ export default {
     data () {
         return {
             isMade: findComponentUpward(this, 'MadeForm'),
-            instance: null,
-            isSubFormItem: false
+            instance: null
             // isSubform: findComponentUpward(this, 'Subform')
         }
     },
     mounted () {
-        // console.log(this.data)
+        // console.log(this)
         // console.log('renderItem' + JSON.stringify(this.data, null, 4))
         const { type } = this.data
         this.registerComponent(type)
@@ -48,20 +47,17 @@ export default {
 
                 // 传入数据 dataObj 为 props
                 instance.data = this.data
-
                 instance.isMade = Boolean(this.isMade) // 是否在 生成 中
 
-                // 监听抛出的数据  this.$emit("emitStream", {  data: "data" });
-                // instance.$on("emitStream", params => {
-                //    params 为组件内部抛出的数据
-
-                // })
+                // 监听事件
                 instance.$on('change', this.onChange)
 
-                // 挂载到 ID 为 plateContainer 的DOM元素
+                // 挂载到 DOM元素 并且手动绑定 $parent
                 if (this.inSubform || templateName === 'Tabs') {
+                    instance.$parent = this
                     instance.$mount(this.$el.querySelector('.layouts-item'))
                 } else {
+                    instance.$parent = this.$children[0]
                     instance.$mount(this.$el.querySelector('.form-item'))
                 }
                 this.instance = instance
