@@ -1,5 +1,5 @@
 <template>
-    <div class="subform">
+    <div class="subform" :style="{ width: data.options.width }">
         <template v-if="!isMade">
             <draggable class="drag-area" v-model="data.list"
                 group="drag"

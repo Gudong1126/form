@@ -1,5 +1,10 @@
 <template>
-    <el-input type="textarea" v-model="value" placeholder="多行文本"></el-input>
+    <el-input type="textarea"
+        v-model="value"
+        :placeholder="data.options.placeholder"
+        :disabled="data.options.disabled"
+        :style="{ width: data.options.width }">
+    </el-input>
 </template>
 
 <script>

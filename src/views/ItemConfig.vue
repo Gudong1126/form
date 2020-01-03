@@ -1,8 +1,23 @@
 <template>
     <div class="item-config">
         <el-form label-position="top" size="mini">
+            <el-form-item label="字段标识" v-if="data.model">
+                <el-input v-model="data.model"></el-input>
+            </el-form-item>
             <el-form-item label="标题" v-if="data.name">
                 <el-input v-model="data.name"></el-input>
+            </el-form-item>
+            <el-form-item label="placeholder" v-if="data.options && data.options.placeholder !== undefined">
+                <el-input v-model="data.options.placeholder"></el-input>
+            </el-form-item>
+            <el-form-item label="默认值" v-if="data.options && data.options.defaultValue !== undefined">
+                <el-input v-model="data.options.defaultValue"></el-input>
+            </el-form-item>
+            <el-form-item label="宽度" v-if="data.options && data.options.width !== undefined">
+                <el-input v-model="data.options.width"></el-input>
+            </el-form-item>
+            <el-form-item label="操作" v-if="data.options && data.options.disabled !== undefined">
+                <el-checkbox v-model="data.options.disabled">禁用</el-checkbox>
             </el-form-item>
             <el-form-item label="效验" v-if="data.options && data.options.required !== undefined">
                 <el-checkbox v-model="data.options.required">必填</el-checkbox>
