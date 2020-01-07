@@ -5,8 +5,8 @@
             :label-width="data.config.labelWidth + 'px'"
             :label-position="data.config.labelPosition"
             :size="data.config.size"
-            :rules="rules"
-        >
+            :rules="rules">
+
             <template v-for="item in data.list">
                 <render-item v-if="item && item.key"
                     ref="renderItem"
@@ -44,7 +44,7 @@ export default {
         this.mergeDefaultValue()
     },
     methods: {
-        mergeDefaultValue () {
+        mergeDefaultValue () { // TODO: 数据回填，目前只能回填一层
             const { value } = this
             let { list } = this.data
 
@@ -76,6 +76,7 @@ export default {
 
             for (let i = 0; i < list.length; i++) {
                 if (!layoutEl.includes(list[i].type)) {
+                    // TODO: 这里我觉的也可以做数据回填操作，可能比目前的方式更好些
                     this.$set(this.formData, list[i].model, list[i].options.defaultValue)
                 }
                 if (list[i].rules && list[i].rules.length > 0) {
@@ -102,10 +103,6 @@ export default {
                             }
                         }
                         resolve(data)
-                    } else {
-                        // resolve({ ...this.formData })
-                        // reject(new Error('表单数据校验失败').message)
-                        // resolve({})
                     }
                 })
             })

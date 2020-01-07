@@ -1,29 +1,11 @@
 # vue-element
 
-## Project setup
-```
-yarn install
-```
+TODO
 
-### Compiles and hot-reloads for development
-```
-yarn run serve
-```
+- [ ] 字段关联的显示和隐藏
+- [ ] 字段直接的运算
+- [ ] 字段关联val回填
 
-### Compiles and minifies for production
-```
-yarn run build
-```
+## Customize configuration
 
-### Run your tests
-```
-yarn run test
-```
-
-### Lints and fixes files
-```
-yarn run lint
-```
-
-### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
