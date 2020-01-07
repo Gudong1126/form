@@ -84,7 +84,22 @@ export default {
                 ...this.data.list[newIndex],
                 options: {
                     ...this.data.list[newIndex].options,
-                    remoteFunc: 'func_' + key
+                    remoteFunc: 'func_' + key,
+                    // TODO: 这里改，只有radio和checkbox才有这个选项
+                    options: [
+                        {
+                            value: '选项1',
+                            label: '选项1'
+                        },
+                        {
+                            value: '选项2',
+                            label: '选项2'
+                        }
+                    ],
+                    props: {
+                        value: 'value',
+                        label: 'label'
+                    }
                 },
                 key,
                 // 绑定键值

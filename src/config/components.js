@@ -27,6 +27,58 @@ export const components = [
                     disabled: false,
                     placeholder: ''
                 }
+            },
+            {
+                type: 'Radio',
+                name: '单选框组',
+                icon: 'el-icon-open',
+                options: {
+                    inline: true,
+                    defaultValue: '',
+                    required: false,
+                    remoteFunc: false, // 是否使用接口获取选项
+                    disabled: false,
+                    options: [
+                        {
+                            value: '选项1',
+                            label: '选项1'
+                        },
+                        {
+                            value: '选项2',
+                            label: '选项2'
+                        }
+                    ],
+                    props: {
+                        value: 'value',
+                        label: 'label'
+                    }
+                }
+            },
+            {
+                type: 'Checkbox',
+                name: '多选框组',
+                icon: 'el-icon-set-up',
+                options: {
+                    inline: true,
+                    defaultValue: [],
+                    required: false,
+                    remoteFunc: false, // 是否使用接口获取选项
+                    disabled: false,
+                    options: [
+                        {
+                            value: '选项1',
+                            label: '选项1'
+                        },
+                        {
+                            value: '选项2',
+                            label: '选项2'
+                        }
+                    ],
+                    props: {
+                        value: 'value',
+                        label: 'label'
+                    }
+                }
             }
         ]
     },
