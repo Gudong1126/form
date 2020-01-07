@@ -1,8 +1,8 @@
 <template>
     <div>
         <el-tabs v-model="activeName">
-            <template v-for="(item, index) in tabs">
-                <el-tab-pane :key="index" :label="item.title" :name="item.title">
+            <template v-for="item in tabs">
+                <el-tab-pane :key="item.key" :label="item.title" :name="item.key">
                     <template v-if="isMade">
                         <made-form v-if="item.list.length > 0" ref="form" :data="item"></made-form>
                     </template>

@@ -106,10 +106,12 @@ export const components = [
                     tabs: [
                         {
                             title: 'tabs1',
+                            key: 'tabs1',
                             list: []
                         },
                         {
                             title: 'tabs2',
+                            key: 'tabs2',
                             list: []
                         }
                     ]

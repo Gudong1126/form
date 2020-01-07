@@ -14,6 +14,21 @@
                 <el-input v-model="data.options.defaultValue"></el-input>
             </el-form-item>
 
+            <el-form-item label="标签页" v-if="data.options && data.options.tabs !== undefined">
+                <draggable tag="ul" v-model="data.options.tabs" handle=".handle">
+                    <template v-for="(item, index) in data.options.tabs">
+                        <li :key="index">
+                            <el-input class="drag-input tabs" v-model="item.title" placeholder="label"></el-input>
+                            <el-button-group class="drag-btn-group">
+                                <el-button class="handle" circle plain type="primary" icon="el-icon-thumb"></el-button>
+                                <el-button circle plain type="danger" icon="el-icon-delete" @click="handleDelTabs(index)"></el-button>
+                            </el-button-group>
+                        </li>
+                    </template>
+                </draggable>
+                <el-button type="text" @click="handleAddTabs">添加页签</el-button>
+            </el-form-item>
+
             <el-form-item label="选项" v-if="data.options && data.options.options !== undefined">
                 <draggable tag="ul" v-model="data.options.options" handle=".handle">
                     <el-radio-group v-if="data.type === 'Radio'" v-model="data.options.defaultValue">
@@ -44,8 +59,8 @@
                             </li>
                         </template>
                     </el-checkbox-group>
-                    <el-button type="text" @click="handleAddOptions">添加选项</el-button>
                 </draggable>
+                <el-button type="text" @click="handleAddOptions">添加选项</el-button>
             </el-form-item>
 
             <el-form-item label="宽度" v-if="data.options && data.options.width !== undefined">
@@ -74,7 +89,8 @@ export default {
                 required: null,
                 pattern: null
             },
-            optionsKey: 0
+            optionsKey: 0,
+            tabsKey: 0
         }
     },
     watch: {
@@ -125,6 +141,18 @@ export default {
         handleOptionsDel (index) { // 选项删除
             if (this.data.options.options.length === 1) return
             this.data.options.options.splice(index, 1)
+        },
+        handleAddTabs () { // 添加新页签
+            this.data.options.tabs.push({
+                title: `新页签${this.tabsKey}`,
+                key: `tabs${this.tabsKey}`,
+                list: []
+            })
+            this.tabsKey++
+        },
+        handleDelTabs (index) { // 页签删除
+            if (this.data.options.tabs.length === 1) return
+            this.data.options.tabs.splice(index, 1)
         }
     }
 }
@@ -141,5 +169,8 @@ export default {
 }
 .drag-btn-group {
     vertical-align: middle;
+}
+.tabs {
+    width: 75%;
 }
 </style>

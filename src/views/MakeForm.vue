@@ -17,14 +17,13 @@
                     <template v-for="(item, index) in data.list">
                         <div :class="{
                             'item': true,
-                            // TODO: 暂时用这这种比较
                             'layouts': item.type === 'Tabs' || item.type === 'Subform',
                             active: selectedItem.key === item.key
                         }"
                             v-if="item && item.key"
                             :key="item.key"
-                            @click.stop="handleClickFormItem(item)"
-                        >
+                            @click.stop="handleClickFormItem(item)">
+
                             <render-item :data="item"></render-item>
 
                             <div class="item-handle" v-if="selectedItem.key === item.key">
@@ -80,32 +79,46 @@ export default {
             // console.log(newIndex)
             // 为添加的元素生成唯一的key
             const key = Date.parse(new Date()) + '_' + Math.ceil(Math.random() * 99999)
-            this.$set(this.data.list, newIndex, {
-                ...this.data.list[newIndex],
-                options: {
-                    ...this.data.list[newIndex].options,
-                    remoteFunc: 'func_' + key,
-                    // TODO: 这里改，只有radio和checkbox才有这个选项
-                    options: [
-                        {
-                            value: '选项1',
-                            label: '选项1'
-                        },
-                        {
-                            value: '选项2',
-                            label: '选项2'
+            let newEle = this.data.list[newIndex]
+            if (newEle.type === 'Radio' || newEle.type === 'Checkbox') {
+                this.$set(this.data.list, newIndex, {
+                    ...newEle,
+                    options: {
+                        ...newEle.options,
+                        remoteFunc: 'func_' + key,
+                        options: [
+                            {
+                                value: '选项1',
+                                label: '选项1'
+                            },
+                            {
+                                value: '选项2',
+                                label: '选项2'
+                            }
+                        ],
+                        props: {
+                            value: 'value',
+                            label: 'label'
                         }
-                    ],
-                    props: {
-                        value: 'value',
-                        label: 'label'
-                    }
-                },
-                key,
-                // 绑定键值
-                model: this.data.list[newIndex].type + '_' + key,
-                rules: []
-            })
+                    },
+                    key,
+                    // 绑定键值
+                    model: newEle.type + '_' + key,
+                    rules: []
+                })
+            } else {
+                this.$set(this.data.list, newIndex, {
+                    ...newEle,
+                    options: {
+                        ...newEle.options,
+                        remoteFunc: 'func_' + key
+                    },
+                    key,
+                    // 绑定键值
+                    model: newEle.type + '_' + key,
+                    rules: []
+                })
+            }
 
             this.setSelectedItem(this.data.list[newIndex])
             // console.log(this.selectFormItem)
