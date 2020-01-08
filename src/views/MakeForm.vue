@@ -18,7 +18,8 @@
                         <div :class="{
                             'item': true,
                             'layouts': item.type === 'Tabs' || item.type === 'Subform',
-                            active: selectedItem.key === item.key
+                            'active': selectedItem.key === item.key,
+                            'light': item.options.display && item.options.display.ops
                         }"
                             v-if="item && item.key"
                             :key="item.key"
@@ -99,7 +100,24 @@ export default {
                         props: {
                             value: 'value',
                             label: 'label'
+                        },
+                        display: {
+                            ops: false,
+                            key: '',
+                            value: ''
                         }
+                    },
+                    key,
+                    // 绑定键值
+                    model: newEle.type + '_' + key,
+                    rules: []
+                })
+            } else if (newEle.type === 'Tabs' || newEle.type === 'Subform') {
+                this.$set(this.data.list, newIndex, {
+                    ...newEle,
+                    options: {
+                        ...newEle.options,
+                        remoteFunc: 'func_' + key
                     },
                     key,
                     // 绑定键值
@@ -111,7 +129,12 @@ export default {
                     ...newEle,
                     options: {
                         ...newEle.options,
-                        remoteFunc: 'func_' + key
+                        remoteFunc: 'func_' + key,
+                        display: {
+                            ops: false,
+                            key: '',
+                            value: ''
+                        }
                     },
                     key,
                     // 绑定键值
@@ -167,6 +190,9 @@ export default {
         //     z-index: 8;
         //     content: '';
         // }
+    }
+    .light {
+        background-color: rgba(222, 222, 222, 0.7) !important;
     }
 
     .empty {

@@ -8,12 +8,14 @@
             :rules="rules">
 
             <template v-for="item in data.list">
-                <render-item v-if="item && item.key"
-                    ref="renderItem"
-                    :data="item"
-                    :key="item.key"
-                    @change="onChange">
-                </render-item>
+                <template v-if="item && item.key">
+                    <render-item v-if="checkDisplay(item)"
+                        ref="renderItem"
+                        :data="item"
+                        :key="item.key"
+                        @change="onChange">
+                    </render-item>
+                </template>
             </template>
         </el-form>
     </div>
@@ -110,6 +112,17 @@ export default {
         onChange (key, val) {
             this.formData[key] = val
             // this.$emit('change', key, val)
+        },
+        checkDisplay (val) {
+            const { options } = val
+            if (options.display) {
+                if (options.display.ops && options.display.key === '') {
+                    return false
+                } else {
+                    // TODO: 检测绑定的值，返回true或false
+                }
+            }
+            return true
         }
     }
 }

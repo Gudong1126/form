@@ -12,7 +12,12 @@ export const components = [
                     defaultValue: '',
                     required: false,
                     placeholder: '',
-                    disabled: false
+                    disabled: false,
+                    display: {
+                        ops: false,
+                        key: '',
+                        value: ''
+                    }
                 }
             },
             {
@@ -25,7 +30,12 @@ export const components = [
                     defaultValue: '',
                     required: false,
                     disabled: false,
-                    placeholder: ''
+                    placeholder: '',
+                    display: {
+                        ops: false,
+                        key: '',
+                        value: ''
+                    }
                 }
             },
             {
@@ -51,6 +61,11 @@ export const components = [
                     props: {
                         value: 'value',
                         label: 'label'
+                    },
+                    display: {
+                        ops: false,
+                        key: '',
+                        value: ''
                     }
                 }
             },
@@ -77,6 +92,11 @@ export const components = [
                     props: {
                         value: 'value',
                         label: 'label'
+                    },
+                    display: {
+                        ops: false,
+                        key: '',
+                        value: ''
                     }
                 }
             }

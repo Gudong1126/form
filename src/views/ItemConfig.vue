@@ -66,8 +66,9 @@
             <el-form-item label="宽度" v-if="data.options && data.options.width !== undefined">
                 <el-input v-model="data.options.width"></el-input>
             </el-form-item>
-            <el-form-item label="操作" v-if="data.options && data.options.disabled !== undefined">
-                <el-checkbox v-model="data.options.disabled">禁用</el-checkbox>
+            <el-form-item label="操作" v-if="data.options">
+                <el-checkbox v-if="data.options.disabled !== undefined" v-model="data.options.disabled">禁用</el-checkbox>
+                <el-checkbox v-if="data.options.display !== undefined" v-model="data.options.display.ops">隐藏</el-checkbox>
             </el-form-item>
             <el-form-item label="效验" v-if="data.options && data.options.required !== undefined">
                 <el-checkbox v-model="data.options.required">必填</el-checkbox>
