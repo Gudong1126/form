@@ -72,6 +72,7 @@ export default {
             }
             this.initFormData()
         },
+
         initFormData () {
             const { list } = this.data
             const layoutEl = ['Tabs']
@@ -91,6 +92,7 @@ export default {
             // console.log(this.rules)
             // console.log(JSON.stringify(this.data, null, 4))
         },
+
         handelGetFormData () {
             return new Promise((resolve, reject) => {
                 this.$refs.form.validate(async (valid) => {
@@ -109,17 +111,25 @@ export default {
                 })
             })
         },
+
         onChange (key, val) {
             this.formData[key] = val
             // this.$emit('change', key, val)
         },
+
+        // 检测元素设置的显示隐藏
         checkDisplay (val) {
             const { options } = val
             if (options.display) {
+                if (options.display.ops === false) return true
+
                 if (options.display.ops && options.display.key === '') {
                     return false
                 } else {
-                    // TODO: 检测绑定的值，返回true或false
+                    const { key, value } = options.display
+                    const find = this.data.list.find(d => d.key === key)
+
+                    return this.formData[find.model] === value
                 }
             }
             return true

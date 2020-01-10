@@ -112,8 +112,8 @@ export const components = [
                 icon: 'el-icon-notebook-2',
                 list: [],
                 options: {
-                    width: '100%',
-                    disabled: false
+                    width: '100%'
+                    // disabled: false
                 }
             },
             {
@@ -122,7 +122,7 @@ export const components = [
                 name: '标签',
                 icon: 'el-icon-notebook-2',
                 options: {
-                    disabled: false,
+                    // disabled: false,
                     tabs: [
                         {
                             title: 'tabs1',

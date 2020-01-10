@@ -68,7 +68,30 @@
             </el-form-item>
             <el-form-item label="操作" v-if="data.options">
                 <el-checkbox v-if="data.options.disabled !== undefined" v-model="data.options.disabled">禁用</el-checkbox>
-                <el-checkbox v-if="data.options.display !== undefined" v-model="data.options.display.ops">隐藏</el-checkbox>
+                <el-checkbox v-if="data.options.display !== undefined"
+                    v-model="data.options.display.ops"
+                    @change="handleDisplayOpsChange">隐藏
+                </el-checkbox>
+                <div class="display-options" v-if="data.options.display && data.options.display.ops">
+                    <div class="flx">
+                        <div class="label">关联</div>
+                        <el-select class="select" v-model="data.options.display.key" placeholder="请选择">
+                            <el-option v-for="item in displayOptions"
+                                :key="item.key"
+                                :label="item.name"
+                                :value="item.key"
+                                :disabled="item.key === data.key || item.type === 'Tabs' || item.type === 'Subform'">
+                            </el-option>
+                        </el-select>
+                    </div>
+                    <render-item class="render-item"
+                        v-if="displaySelectData"
+                        :data="displaySelectData"
+                        inSubform
+                        @change="_onChange">
+                    </render-item>
+                </div>
+
             </el-form-item>
             <el-form-item label="效验" v-if="data.options && data.options.required !== undefined">
                 <el-checkbox v-model="data.options.required">必填</el-checkbox>
@@ -79,10 +102,12 @@
 
 <script>
 import draggable from 'vuedraggable'
+import { deepCopy } from '../utils/assist'
+import RenderItem from '../components/RenderItem'
 
 export default {
     name: 'ItemConfig',
-    components: { draggable },
+    components: { draggable, RenderItem },
     data () {
         return {
             validator: {
@@ -91,17 +116,34 @@ export default {
                 pattern: null
             },
             optionsKey: 0,
-            tabsKey: 0
+            tabsKey: 0,
+            displayOptions: [] // 隐藏关联设置选项
         }
     },
     watch: {
         'data.options.required' (val) {
             this.generateRules(val)
+        },
+        'data.options.display' (val) { // selectedItem 变化时就去计算 displayOptions 方便已设置显示隐藏元素的回填
+            if (val && val.ops) {
+                const list = deepCopy(this.formConfig.list)
+                this._findSelectInLevel(list)
+            }
         }
     },
     computed: {
         data () {
             return this.$events.get('selectedItem')
+        },
+        formConfig () {
+            return this.$events.get('formConfig')
+        },
+        displaySelectData () { // 计算隐藏关联元素
+            let isFind = this.displayOptions.find(d => d.key === this.data.options.display.key)
+            if (isFind) {
+                isFind.options.defaultValue = this.data.options.display.value
+            }
+            return isFind
         }
     },
     methods: {
@@ -117,14 +159,17 @@ export default {
                 }
             })
         },
-        handleAddOptions () { // 添加新选项
+
+        handleAddOptions () {
             this.data.options.options.push({
                 label: `新选项${this.optionsKey}`,
                 value: `新选项${this.optionsKey}`
             })
             this.optionsKey++
         },
-        handelOptionsVlaueChange (val, item) { // 检测选项设置是否有重复的 value
+
+        // 检测选项设置是否有重复的 value
+        handelOptionsVlaueChange (val, item) {
             const { options, defaultValue } = this.data.options
             let find = 0
             for (const op of options) {
@@ -139,11 +184,13 @@ export default {
             // 修改 value 清空之前设置的默认值
             this.data.options.defaultValue = typeof defaultValue === 'string' ? '' : []
         },
-        handleOptionsDel (index) { // 选项删除
+
+        handleOptionsDel (index) {
             if (this.data.options.options.length === 1) return
             this.data.options.options.splice(index, 1)
         },
-        handleAddTabs () { // 添加新页签
+
+        handleAddTabs () {
             this.data.options.tabs.push({
                 title: `新页签${this.tabsKey}`,
                 key: `tabs${this.tabsKey}`,
@@ -151,9 +198,41 @@ export default {
             })
             this.tabsKey++
         },
-        handleDelTabs (index) { // 页签删除
+
+        handleDelTabs (index) {
             if (this.data.options.tabs.length === 1) return
             this.data.options.tabs.splice(index, 1)
+        },
+
+        // 当隐藏设置为true时，计算 displayOptions
+        handleDisplayOpsChange (val) {
+            if (val) {
+                const list = deepCopy(this.formConfig.list)
+                this._findSelectInLevel(list)
+            }
+        },
+
+        // 找出当前 selectedItem 所在的层级
+        _findSelectInLevel (list) {
+            for (const item of list) {
+                const { type, options } = item
+
+                if (type === 'Tabs') {
+                    for (const c of options.tabs) {
+                        this._findSelectInLevel(c.list)
+                    }
+                }
+
+                if (item.key === this.data.key) {
+                    this.displayOptions = list
+                    break
+                }
+            }
+        },
+
+        // 隐藏关联元素值设置
+        _onChange (key, val) {
+            this.data.options.display.value = val
         }
     }
 }
@@ -174,4 +253,23 @@ export default {
 .tabs {
     width: 75%;
 }
+
+.display-options {
+    padding: 5px;
+    border: 1px dashed #409EFF;
+    .flx {
+        display: flex;
+        .label {
+            flex: 0 0 35px;
+            color: #606266;
+        }
+        .select {
+            width: 100%;
+        }
+    }
+    .render-item {
+        margin-top: 10px;
+    }
+}
+
 </style>
